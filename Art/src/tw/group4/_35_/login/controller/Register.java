@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.sql.Blob;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Base64;
 import java.util.Objects;
 
 import javax.imageio.ImageIO;
@@ -16,7 +17,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.sql.rowset.serial.SerialBlob;
 
-import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -139,8 +139,8 @@ public class Register {
 				byte[] ba = baos.toByteArray();
 //	 			convert Byte array to Blob using SerialBlob() method
 				blob = new SerialBlob(ba);
-				
-		        String encodedString = Base64.encodeBase64String(ba);
+
+		        String encodedString = Base64.getEncoder().encodeToString(ba);
 				session.setAttribute("memberPic", encodedString);
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -153,7 +153,7 @@ public class Register {
 				
 //				把mFile的byte[]叫出來轉Base64字串
 				byte[] memberPicByteArray = mFile.getBytes();
-				String encodedString = Base64.encodeBase64String(memberPicByteArray);
+				String encodedString = Base64.getEncoder().encodeToString(memberPicByteArray);
 				session.setAttribute("memberPic", encodedString);
 			} catch (Exception e) {
 				e.printStackTrace();

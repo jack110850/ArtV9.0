@@ -24,7 +24,7 @@ fieldset {
 	margin: 0 auto;
 }
 
-#sendData, .pass {
+.pass {
 	display: none;
 }
 .pass {
@@ -56,7 +56,7 @@ fieldset {
 	<fieldset>
 		<legend>請輸入帳號密碼</legend>
 		<c:url var="url" value='/35/loginCheck.ctrl' />
-		<form:form action="${url}" method="POST" modelAttribute="member">
+		<form:form name="loginForm" action="${url}" method="POST" modelAttribute="member">
 			<table class="loginForm">
 				<tr>
 					<td colspan=2 class="authError">${authError}</td>
@@ -80,17 +80,12 @@ fieldset {
               			</c:if>
 						value="yes" /></td>
 				</tr>
-				<!-- 				<tr> -->
-				<!-- 					<td colspan="2"> -->
-				<!-- 						<button class='captcha'>點我進行驗證</button> -->
-				<!-- 					</td> -->
-				<!-- 				</tr> -->
+<!-- 				<tr> -->
+<%-- 					<td style="padding-top: 20px;"><form:button value="Send" --%>
+<%-- 							name ="submitButton" id='sendData' >真的登入按鈕</form:button></td> --%>
+<!-- 				</tr> -->
 				<tr>
-					<td style="padding-top: 20px;"><form:button value="Send"
-							id='sendData'>真的登入按鈕</form:button></td>
-				</tr>
-				<tr>
-					<td colspan=2 style="padding-top: 20px;"><p class="pass">驗證通過，您不是機器人<br>3秒後自動登入</p></td>
+					<td colspan=2 style="padding-top: 20px;"><p class="pass"></p></td>
 				</tr>
 			</table>
 		</form:form>
@@ -134,22 +129,22 @@ fieldset {
 // 								取Key對應value用message.score或message["score"]
 //                              JSONObject.key，可以抓出key的value
 								if (message.score >= 0.8){
-									console.log("產出登入按鈕");
 									let pass = document.querySelector('.pass');
 									pass.style.display = "block";
+									pass.innerHTML="reCAPTCHA評分: "+message.score+"<br>驗證通過，您不是機器人<br>3秒後自動登入";
 
-									let delayInMilliseconds = 1000; //3 second
+									let delayInMilliseconds = 1000; //1 second
 									setTimeout(() => {
 										 // code to be executed after 1 second
-										pass.innerHTML="驗證通過，您不是機器人<br>2秒後自動登入";
+										pass.innerHTML="reCAPTCHA評分: "+message.score+"<br>驗證通過，您不是機器人<br>2秒後自動登入";
 										}, delayInMilliseconds);
 									setTimeout(() => {
 										 // code to be executed after 2 second
-										pass.innerHTML="驗證通過，您不是機器人<br>1秒後自動登入";
+										pass.innerHTML="reCAPTCHA評分: "+message.score+"<br>驗證通過，您不是機器人<br>1秒後自動登入";
 										}, delayInMilliseconds+1000);
 									setTimeout(() => {
-									 // code to be executed after 3 second
-									document.querySelector('#sendData').click();
+										 // code to be executed after 3 second
+										loginForm.submit();
 									}, delayInMilliseconds+2000);
 								}
 							});

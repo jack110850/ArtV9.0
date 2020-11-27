@@ -45,7 +45,6 @@
 						<li><a href="#">商店預約紀錄</a></li>
 						<li><a href="#">藝人聘用紀錄</a></li>
 						<li><a href="#">課程購買紀錄</a></li>
-						<li><a href="#">贊助紀錄</a></li>
 						<li><a href="#">場地租借紀錄</a></li>
 <!-- 						<li><a href="#">離我最近的活動</a></li> -->
 <!-- 						<li class="menu-has-children"><a href="">Pages</a> -->

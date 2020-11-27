@@ -12,13 +12,13 @@ import tw.group4._35_.login.model.WebsiteMemberService;
 import tw.group4.util.IdentityFilter;
 
 @Controller
-public class MemberListAll {
+public class MemberEntry {
 	
 	@Autowired
 	private WebsiteMemberService service;
 	
-	@GetMapping("/35/members.ctrl")
-	public String memberList(Model m){
+	@GetMapping("/35/memberEntry.ctrl")
+	public String memberEntry(Model m){
 		
 		List<WebsiteMember> list = service.selectAllMembers();
 		m.addAttribute("membersList", list);

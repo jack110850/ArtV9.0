@@ -13,6 +13,22 @@ div {
 </style>
 </head>
 <body>
+	<!-- start banner Area -->
+	<section class="banner-area relative" id="home">
+		<div class="overlay overlay-bg"></div>
+		<div class="container">
+			<div class="row d-flex align-items-center justify-content-center">
+				<div class="about-content col-lg-12">
+					<h1 class="text-white">離我最近的活動</h1>
+					<p class="text-white link-nav">
+						<a href="index.html">Home </a> <span class="lnr lnr-arrow-right"></span>
+						<a href="<c:url value='/35/randomRecom.ctrl' />">離我最近的活動</a>
+					</p>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- End banner Area -->
 	<br>
 	<div>
 		<h1>請輸入您的位置</h1>
@@ -70,6 +86,8 @@ div {
 // 			因為fetch就算不是200也會回傳成功的結果，所以要加這步驟判斷
 // 			等同response==200
 			if (response.ok){
+// 				response回傳的是stream物件，所以需要.text()/.json()/.blob()方法取資料
+// 				response.header可以取header內容
 // 				response.text()回傳的是promise物件，所以要再.then()一次處理成功時回傳的值
 // 				message帶入成為then()中箭頭函式之參數
 				response.text().then(message => {	

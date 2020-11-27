@@ -29,6 +29,17 @@ public class WebsiteMemberDao {
 		return wmBean;
 	}
 	
+	public int insertWithResult(WebsiteMember wmBean) {
+		Session session = sessionFactory.getCurrentSession();
+		
+		if (wmBean!=null) {
+			session.save(wmBean);
+			return 1;
+		}
+		
+		return 0;
+	}
+	
 	public WebsiteMember selectById(int id) {
 		Session session = sessionFactory.getCurrentSession();
 		WebsiteMember wmBean = session.get(WebsiteMember.class, id);

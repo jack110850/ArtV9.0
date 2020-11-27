@@ -12,7 +12,6 @@ import java.util.Properties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.MediaType;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
@@ -165,8 +164,9 @@ public class SpringMVCConfig implements WebMvcConfigurer {
 //  設定ContentNegotiationManager，稍後設定ContentNegotiatingViewResolver會用到
 	@Override
 	public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
-		configurer.ignoreAcceptHeader(true).defaultContentType(
-				MediaType.TEXT_HTML);
+//		會和Ajax拿資料衝突到
+//		configurer.ignoreAcceptHeader(true).defaultContentType(
+//				MediaType.TEXT_HTML);
 	}
 
 //	設定ContentNegotiatingViewResolver，初步設定把檔案輸出格式對應的畫面

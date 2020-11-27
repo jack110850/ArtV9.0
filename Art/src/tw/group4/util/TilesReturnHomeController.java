@@ -19,7 +19,7 @@ public class TilesReturnHomeController {
 	
     @RequestMapping(path = { "/" }, method = RequestMethod.GET)
     public String returnHome() {
-		
+    	
         return IdentityFilter.loginID+"index/index";
     }
     

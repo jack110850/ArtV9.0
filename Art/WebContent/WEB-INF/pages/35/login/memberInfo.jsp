@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>我的會員資訊管理</title>
+<title>查看個人資訊</title>
 </head>
 <body>
 

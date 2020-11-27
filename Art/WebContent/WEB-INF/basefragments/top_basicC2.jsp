@@ -42,9 +42,8 @@
 						<li><a href="#">找商店</a></li>
 						<li><a href="#">找藝人</a></li>
 						<li><a href="#">找課程</a></li>
-						<li><a href="#">企業贊助</a></li>
-						<li><a href="#">場地租借</a></li>
-						<li><a href="#">離我最近的活動</a></li>
+						<li><a href="<c:url value='/35/csr' />">企業場地租借與活動贊助</a></li>
+						<li><a href="<c:url value='/35/randomRecom.ctrl' />">離我最近的活動</a></li>
 <!-- 						<li class="menu-has-children"><a href="">Pages</a> -->
 <!-- 							<ul> -->
 <!-- 								<li><a href="#">Blog Single</a></li> -->

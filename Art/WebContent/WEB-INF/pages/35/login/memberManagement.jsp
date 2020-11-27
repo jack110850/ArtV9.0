@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>管理網站會員</title>
+<title>會員資訊管理</title>
 <style>
 .post {
 	display: none;
@@ -18,7 +18,7 @@
 		<h1 align="center">會員資料列表</h1>
 	</div>
 	<div class="back" align="right">
-		<form action="<c:url value='/index.html'/> " method="get">
+		<form action="<c:url value='/35/returnHomePageF'/> " method="get">
 			<div class="submitButton">
 				<input type="submit" class="" name="submit" value="返回後台管理系統首頁">
 			</div>
@@ -67,19 +67,21 @@
 			</table>
 		</div>
 	</div>
-	<div class="deleteResult" align="center">
-		<h2>${deleteResult}</h2>
+	<div align="center">
+		<h2 id="insertResult"></h2>
 		<br>
 	</div>
-	<!-- 	<div class="select" align="center"> -->
-	<%-- 		<form action="<c:url value='/35/select.ctrl'/> " method="get"> --%>
-	<!-- 			<div class="submitButton"> -->
-	<!-- 				<label>輸入會員名稱查詢</label> <input type="text" name="select" value=""> -->
-	<!-- 				<input type="submit" name="submit" value="送出"> <input -->
-	<!-- 					type="reset" name="reset" value="清除"> -->
-	<!-- 			</div> -->
-	<!-- 		</form> -->
-	<!-- 	</div> -->
+	<div align="center">
+		<h2 id="deleteResult"></h2>
+		<br>
+	</div>
+	<div align="center">
+		<div class="submitButton">
+			<label>輸入會員名稱查詢</label> 
+			<input type="text" name="select" id="singleQuery" value="123">
+			<input type="button" value="送出" onclick="get(singleQuery)">
+		</div>
+	</div>
 	<br>
 	<div class="content">
 		<table id="35"
@@ -114,34 +116,14 @@
 						<td class="">${list.registerTime}</td>
 						<td class="">${list.purchaseLimit}</td>
 						<td class="update">
-							<form action="<c:url value='/35/editEventSpace'/> " method="get">
-								<div class="submitButton">
-									<%-- 									<input type="hidden" name="id" value="${list.id}"> <input --%>
-									<%-- 										type="hidden" name="name" value="${list.name}"> <input --%>
-									<%-- 										type="hidden" name="owner" value="${list.owner}"> <input --%>
-									<%-- 										type="hidden" name="address" value="${list.address}"> --%>
-									<%-- 									<input type="hidden" name="type" value="${list.type}"> --%>
-									<!-- 									<input type="hidden" name="shoppingArea" -->
-									<%-- 										value="${list.shoppingArea}"> <input type="hidden" --%>
-									<%-- 										name="transportation" value="${list.transportation}"> --%>
-									<%-- 									<input type="hidden" name="capacity" value="${list.capacity}"> --%>
-									<%-- 									<input type="hidden" name="unitPrice" value="${list.unitPrice}"> --%>
-									<%-- 									<input type="hidden" name="area" value="${list.area}"> --%>
-									<!-- 									<input type="hidden" name="rentalTime" -->
-									<%-- 										value="${list.rentalTime}"> <input type="hidden" --%>
-									<%-- 										name="activityInfo" value="${list.activityInfo}"> <input --%>
-									<%-- 										type="hidden" name="contactInfo" value="${list.contactInfo}"> --%>
-									<input type="submit" name="submit" value="修改">
-								</div>
-							</form>
+							<div>
+								<input type="button" value="修改" id="${list.name}" onclick="put(this.id)">
+							</div>
 						</td>
 						<td class="delete">
-							<form action="<c:url value='/35/delete.ctrl'/> " method="GET">
-								<div class="submitButton">
-									<input type="hidden" name="name" value="${list.name}">
-									<input type="submit" name="submit" value="刪除">
-								</div>
-							</form>
+							<div>
+								<input type="button" value="刪除" id="${list.name}" onclick="delete(this.id)">
+							</div>
 						</td>
 					</tr>
 				</c:forEach>
@@ -159,7 +141,12 @@ let postDiv = document.querySelector(".post");
 	
 let add = () =>{
 	postDiv.style.display= "block";
-} 
+}
+
+let singleQuery = document.getElementById("singleQuery").value;
+let get = (singleQuery) => {
+	console.log(singleQuery);
+}
 
 let post = () => {
 	let name = document.getElementById("name").value;
@@ -179,11 +166,12 @@ let post = () => {
 			"purchaseLimit": purchaseLimit
    		}
 	postDiv.style.display= "none";
-	fetch("<c:url value='/35/members/' />"+name, {
+	fetch("<c:url value='/35/members.ctrl' />", {
 		method:"post",
 		headers : {
-		        'Content-Type' : 'application/json; charset=UTF-8'
-		    },
+     		'Content-Type' : 'application/json; charset=UTF-8'
+ 		},
+//  	物件變json
 		body: JSON.stringify(jsonMember)
 		}
 	).then(
@@ -191,13 +179,34 @@ let post = () => {
 			if (response.ok){
 				response.json().then(
 					object => {
-						console.log(object.name);
+						
+						if(object.hasOwnProperty('success')){
+							document.getElementById("insertResult").innerText= "新增成功";
+						}else {
+							document.getElementById("insertResult").innerText= "新增失敗";
+						}
+						setTimeout(() => {
+							window.location.reload();
+						}, 500);
 					}
-				);
+				).catch();
 			}
+			document.getElementById("insertResult").innerText= "新增失敗";
+			setTimeout(() => {
+				window.location.reload();
+			}, 500);
 		}
 	).catch();
+	
 }
+
+// let put = (name) => {
+	
+// }
+
+// let delete = (name) => {
+	
+// }
 </script>
 </body>
 </html>

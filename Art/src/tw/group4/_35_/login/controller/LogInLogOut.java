@@ -1,5 +1,6 @@
 package tw.group4._35_.login.controller;
 
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.Objects;
 
@@ -11,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -89,7 +89,7 @@ public class LogInLogOut {
 		session.setAttribute("member", memberFullInfo);
 //		圖片byteArray透過Base64轉字串，輸出到html
 		byte[] memberPicByteArray = wmService.getMemberPicByteArray(member);
-        String encodedString = Base64.encodeBase64String(memberPicByteArray);
+        String encodedString = Base64.getEncoder().encodeToString(memberPicByteArray);
 		session.setAttribute("memberPic", encodedString);
         
 		// 會員驗證ok，接著建立cookie，搭配FindCookieFilter方便下次登入流程
@@ -137,9 +137,18 @@ public class LogInLogOut {
 	}
 
 	@GetMapping("/35/loginSuccess")
-	public String loginRedirect() {
-
-		return IdentityFilter.loginID + "35/login/loginSuccess";
+	public String loginRedirect(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		if (Objects.nonNull(session.getAttribute("requestURI"))) {
+			String originalRequestURI = (String)session.getAttribute("requestURI");
+			int contextPathLength = request.getContextPath().length();
+//			切割掉前面的contextPath，只留控制器路徑
+			String requestURI = originalRequestURI.substring(contextPathLength);
+			System.out.println(requestURI);
+			return "redirect:"+ requestURI;
+		}else {
+			return IdentityFilter.loginID + "35/login/loginSuccess";
+		}
 	}
 
 //	@ModelAttribute("thankU")代表在Model新增一個屬性
@@ -161,9 +170,15 @@ public class LogInLogOut {
 		
 		String thankU = null;
 		thankU = ((WebsiteMember) session.getAttribute("member")).getName() + "明天擱再來！";
-//		下面方法只能移除單一屬性
-//		session.removeAttribute("member"); 
+//		移除session單一屬性
+//		session.removeAttribute(); 
+//		移除整個session
 		session.invalidate();
+		
+//		建立新的session，因為是登出所以馬上把session內的"sessionTimeoutToken"加回來
+//		HttpSession sessionNew = httpReq.getSession();	
+//		sessionNew.setAttribute("sessionTimeoutToken", "valid");
+		
 		m.addAttribute("thankU", thankU);
 
 		return "redirect:/35/logoutRedirect";

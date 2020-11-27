@@ -22,6 +22,10 @@ public class WebsiteMemberService {
 		return dao.insert(wmBean);
 	}
 	
+	public int insertWithResult(WebsiteMember wmBean) {
+		return dao.insertWithResult(wmBean);
+	}
+	
 	//按id讀取資料庫內會員的方法
 	public WebsiteMember selectById(int id) {
 		return dao.selectById(id);

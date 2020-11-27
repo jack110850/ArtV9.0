@@ -46,14 +46,14 @@
 	<li class="nav-item"><a class="nav-link collapsed" href="#"
 		data-toggle="collapse" data-target="#collapseUtilities"
 		aria-expanded="true" aria-controls="collapseUtilities"> <i
-			class="fas fa-users"></i> <span>企業功能資料管理</span>
+			class="fas fa-users"></i> <span>還沒想好這個要叫什麼</span>
 	</a>
 		<div id="collapseUtilities" class="collapse"
 			aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
 			<div class="bg-white py-2 collapse-inner rounded">
 				<h6 class="collapse-header">藝文活動服務:</h6>
-				<a class="collapse-item" href="<c:url value='/35/selectAll.ctrl' />">修改租借場地資訊</a> 
-				<a class="collapse-item" href="<c:url value='' />">修改贊助活動資訊</a>
+				<a class="collapse-item" href="<c:url value='/35/selectAll.ctrl' />">修改企業租借場地資訊</a> 
+				<a class="collapse-item" href="<c:url value='/35/memberEntry.ctrl' />">修改會員資訊</a>
 			</div>
 		</div></li>
 
