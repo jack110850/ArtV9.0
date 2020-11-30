@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +22,6 @@ import tw.group4._04_.back.model.ShowBean;
 import tw.group4._04_.front.seat.model.SeatBean;
 import tw.group4._04_.front.seat.model.SeatBeanDAO;
 import tw.group4._04_.front.seat.model.SeatBeanService;
-import tw.group4._04_.front.shopcart.model.Shoppingcart;
 import tw.group4.util.IdentityFilter;
 
 @Controller
@@ -33,21 +31,21 @@ public class SeatCrud {
 	private SeatBean seatBean;
 	@Autowired
 	private SeatBeanService seatBeanService;
-	@Autowired
-	private Shoppingcart shoppingcart;
 	
-
+	//search seat
+//	@RequestMapping(path = "/04/seatSearch.ctrl", method = RequestMethod.GET)
+//	@ResponseBody 
+//	public Object seatSearch(Model model) {
+//		int actno = 1;
+//		Map<String, Integer>seatMap=seatBeanService.select(actno);
+//		System.out.println(seatMap);
+//			return seatMap;
+//	}
 	@RequestMapping(path = "/04/seatSearch.ctrl", method = RequestMethod.GET)
-	public String seatSearch(Model model ,HttpSession session,Integer ticketnum) {
-//		int actid =Integer.parseInt((String) session.getAttribute("actid"));
-		int actid = (int) session.getAttribute("actid");
-		shoppingcart.setACT_ID(actid);
-		shoppingcart.setTITLE((String)(session.getAttribute("title")));
-		shoppingcart.setTICKET_NUM(ticketnum);
-//		shoppingcart.setADULT_NUM(adultnum);
-//		shoppingcart.setHALF_NUM(halfnum);
-		//shoppingcart存入session
-		session.setAttribute("shoppingcart",shoppingcart);
+//	public String seatSearch(@ModelAttribute("actid")int actid,Model model) {
+	public String seatSearch(Model model,HttpSession session) {
+		int actid =Integer.parseInt((String) session.getAttribute("actid"));
+		System.out.println("actid = "+actid);
 		Map<String, Integer>seatMap=seatBeanService.select(actid);
 		System.out.println(seatMap);
 		model.addAttribute("seat", seatMap);

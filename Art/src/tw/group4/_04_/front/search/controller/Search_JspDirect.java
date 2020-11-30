@@ -27,7 +27,7 @@ public class Search_JspDirect {
 		return IdentityFilter.loginID+"04/front_saleTicket/index_front";
 	}
 	
-	@RequestMapping(path = "/04/showDetail", method = RequestMethod.POST)
+	@RequestMapping(path = "/04/showDetail", method = RequestMethod.GET)
 	public String processShowdetail( ) {
 
 		return IdentityFilter.loginID+"04/front_saleTicket/showDetail";

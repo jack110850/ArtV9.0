@@ -2,7 +2,6 @@ package tw.group4.config;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 
 //import java.util.Properties;
 //
@@ -12,8 +11,7 @@ import java.util.Properties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.http.MediaType;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.springframework.web.accept.ContentNegotiationManager;
 import org.springframework.web.client.RestTemplate;
@@ -164,7 +162,6 @@ public class SpringMVCConfig implements WebMvcConfigurer {
 //  設定ContentNegotiationManager，稍後設定ContentNegotiatingViewResolver會用到
 	@Override
 	public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
-//		會和Ajax拿資料衝突到
 //		configurer.ignoreAcceptHeader(true).defaultContentType(
 //				MediaType.TEXT_HTML);
 	}
@@ -232,25 +229,6 @@ public class SpringMVCConfig implements WebMvcConfigurer {
 	@Bean
 	public RestTemplate restTemplate() {
 	    return new RestTemplate();
-	}
-	
-//	SpringMail
-	@Bean
-	public JavaMailSender getJavaMailSender() {
-	    JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-	    mailSender.setHost("smtp.gmail.com");
-	    mailSender.setPort(587);
-	    
-	    mailSender.setUsername("u9913036@gms.ndhu.edu.tw");
-	    mailSender.setPassword("benny19930812");
-	    
-	    Properties props = mailSender.getJavaMailProperties();
-	    props.put("mail.transport.protocol", "smtp");
-	    props.put("mail.smtp.auth", "true");
-	    props.put("mail.smtp.starttls.enable", "true");
-	    props.put("mail.debug", "true");
-	    
-	    return mailSender;
 	}
 	
 }

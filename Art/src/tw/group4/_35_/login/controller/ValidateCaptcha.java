@@ -30,9 +30,6 @@ public class ValidateCaptcha {
 	RestTemplate restTemplate;
 	
 	@GetMapping("/35/validate")
-//	先前設定.json, .xml, .xslx的view會和@ResponseBody回傳的response之header的contentType衝突
-//	需用ResponseEntity<>強制設定回傳response之header的contentType，才能解決問題
-//	無法自動對應傳入contentType的型態轉變，故已註解上述設定
 	public ResponseEntity<JSONObject> validateCaptcha (HttpServletRequest request,
 						@RequestParam("token")String token) {
 		

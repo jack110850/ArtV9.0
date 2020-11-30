@@ -2,7 +2,6 @@ package tw.group4._04_.front.search.controller;
 
 import java.io.PrintWriter;
 import java.net.URLEncoder;
-import java.sql.Blob;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -14,7 +13,6 @@ import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 
-import org.apache.commons.codec.binary.Base64;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +26,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractController;
 
 import tw.group4._04_.back.model.ShowBean;
-import tw.group4._04_.back.model.ShowBean2;
 import tw.group4._04_.back.model.ShowBeanService;
 import tw.group4.util.IdentityFilter;
 
@@ -38,8 +35,6 @@ public class Search_CRUDCtrl {
 	// 標註@Autowired，注入dependency
 	@Autowired
 	private ShowBean showBean;
-	@Autowired
-	private ShowBean2 showBean2;
 
 	@Autowired
 	private ShowBeanService showBeanService;
@@ -51,7 +46,7 @@ public class Search_CRUDCtrl {
 	// Action導到的名稱
 	
 	@RequestMapping(path = "/04/SearchTo.ctrl", method = RequestMethod.GET)
-	public String processSearchAll(String searchString, String page,String searchsite,String category,String startdate,String enddate ,Model model) throws ParseException {
+	public String processSearchAll(String searchString, String page,String site,String category,String startdate,String enddate ,Model model) throws ParseException {
 
 		
 		//使用.equals("")來判定字串是否相同 ==判定的是物件位址 
@@ -60,9 +55,9 @@ public class Search_CRUDCtrl {
 			System.out.println("模糊查詢");
 			return  processSearchString(searchString, page, model);
 		}
-		else if (!searchsite.equals("")) {
+		else if (!site.equals("")) {
 			
-			return  processSearchString(searchsite, page, model);
+			return  processSearchString(site, page, model);
 		}
 		else if (!category.equals("")) {
 			return  processCategorySearch(category, page, model);	
@@ -90,8 +85,8 @@ public class Search_CRUDCtrl {
 		List<Map> list = new ArrayList<Map>();
 //		不用再new ShowBeanService因為已經用@Autowired  private ShowBeanService showBeanService依賴注入
 //		ShowBeanService showService = new ShowBeanService();
-		List<ShowBean2> showList = showBeanService.find(searchString);
-		for (ShowBean2 showBean : showList) {
+		List<ShowBean> showList = showBeanService.find(searchString);
+		for (ShowBean showBean : showList) {
 //			String category = Integer.toString(showBean.getACT_CATEGORY());
 
 			int noint = showBean.getACT_NO();
@@ -100,7 +95,6 @@ public class Search_CRUDCtrl {
 			String startdate = showBean.getACT_STARTDATE();
 			String enddate = showBean.getACT_ENDDATE();
 			String description = showBean.getACT_DESCRIPTION();
-			
 
 			Map map = new HashMap();
 			map.put("no", noint);
@@ -109,7 +103,6 @@ public class Search_CRUDCtrl {
 			map.put("startdate", startdate);
 			map.put("enddate", enddate);
 			map.put("description", description);
-			
 			
 	
 			// 存入map集合中
@@ -139,12 +132,14 @@ public class Search_CRUDCtrl {
 			if (endIndex > totalnum)
 				endIndex = totalnum;
 
+//				model.addAttribute(attributeName, attributeValue)
 			model.addAttribute("totalnum", totalnum);
 			model.addAttribute("PerPage", PerPage);
 			model.addAttribute("totalPages", totalPages);
 			model.addAttribute("beginIndex", beginIndex);
 			model.addAttribute("endIndex", endIndex);
 			model.addAttribute("page", page2);
+//			model.addAttribute("category", category);
 			model.addAttribute("searchString", searchString);
 
 			model.addAttribute("key_list", list);// 将list放入request中
@@ -158,16 +153,15 @@ public class Search_CRUDCtrl {
 	//分類查詢
 	@RequestMapping(path = "/04/CategorySearch.ctrl", method = RequestMethod.GET)
 	public String processCategorySearch(String category, String page, Model model) {
-		int categoryInt = Integer.parseInt(category);
+
 		System.out.println("category=" + category);
 //		System.out.println("page="+p);
 
 		List<Map> list = new ArrayList<Map>();
 
-//		List<ShowBean> showList = showBeanService.selectAll_startdate();
-		List<ShowBean2> showList = showBeanService.selectAll_category(categoryInt);
+		List<ShowBean> showList = showBeanService.selectAll_startdate();
 
-		for (ShowBean2 showBean : showList) {
+		for (ShowBean showBean : showList) {
 			String categoryString = Integer.toString(showBean.getACT_CATEGORY());
 //			System.out.println(categoryString);
 			int noint = showBean.getACT_NO();
@@ -176,11 +170,7 @@ public class Search_CRUDCtrl {
 			String startdate = showBean.getACT_STARTDATE();
 			String enddate = showBean.getACT_ENDDATE();
 			String description = showBean.getACT_DESCRIPTION();
-//			byte[] photo =showBean.getACT_PHOTO();
-//			圖片byteArray透過Base64轉字串，輸出到html
-//	        String Photoencode = Base64.encodeBase64String(photo);
-//			System.out.println(photo);
-//			if (category.equals(categoryString)) {
+			if (category.equals(categoryString)) {
 
 				Map map = new HashMap();
 				map.put("no", noint);
@@ -189,7 +179,6 @@ public class Search_CRUDCtrl {
 				map.put("startdate", startdate);
 				map.put("enddate", enddate);
 				map.put("description", description);
-//				map.put("photo", Photoencode);
 				// 存入map集合中
 //				System.out.println(map);
 				list.add(map);// 將map集合放入list集合
@@ -228,8 +217,7 @@ public class Search_CRUDCtrl {
 
 				model.addAttribute("key_list", list);// 将list放入request中
 			}
-//		}
-		
+		}
 		int listsize = list.size();
 		System.out.println("共" + listsize + "筆資料");
 
@@ -245,7 +233,7 @@ public class Search_CRUDCtrl {
 
 		List<Map> list = new ArrayList<Map>();
 
-		List<ShowBean2> showList = showBeanService.selectAll_startdate();
+		List<ShowBean> showList = showBeanService.selectAll_startdate();
 
 		SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -256,13 +244,13 @@ public class Search_CRUDCtrl {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 		//將日期轉為年-月-日-星期格式
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-EE");
-		for (ShowBean2 showbean : showList) {
+		for (ShowBean showbean : showList) {
 			String dateString = showbean.getACT_STARTDATE();
 			int noint = showbean.getACT_NO();
 			String titleString = showbean.getACT_TITLE();
 			String siteString = showbean.getACT_LOCATION_NAME();
 			String enddate = showbean.getACT_ENDDATE();
-			String description = showBean2.getACT_DESCRIPTION();
+			String description = showBean.getACT_DESCRIPTION();
 			Date date;
 			date = sdf.parse(dateString);
 			// System.out.println(date);
@@ -334,7 +322,7 @@ public class Search_CRUDCtrl {
 
 			List<Map> list = new ArrayList<Map>();
 
-			List<ShowBean2> showList = showBeanService.selectAll_enddate();
+			List<ShowBean> showList = showBeanService.selectAll_enddate();
 
 			SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -345,7 +333,7 @@ public class Search_CRUDCtrl {
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 			//將日期轉為年-月-日-星期格式
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-EE");
-			for (ShowBean2 showbean : showList) {
+			for (ShowBean showbean : showList) {
 				String dateString = showbean.getACT_ENDDATE();
 				String startdate = showbean.getACT_STARTDATE();
 				
@@ -414,32 +402,6 @@ public class Search_CRUDCtrl {
 			System.out.println("共" + listsize + "筆資料");
 
 			return IdentityFilter.loginID+"04/front_saleTicket/04_select";
-		}
-		//show detail
-		@RequestMapping(path = "/04/showDetail.ctrl", method = RequestMethod.GET)
-		public String processUpdate(int actid,Model model) {
-
-			System.out.println("actid="+actid);			
-			ShowBean showBean = showBeanService.select(actid);
-
-			String title = showBean.getACT_TITLE();
-			String locationName = showBean.getACT_LOCATION_NAME();
-			String description = showBean.getACT_DESCRIPTION();
-			String startdate = showBean.getACT_STARTDATE();
-			String enddate = showBean.getACT_ENDDATE();
-			byte[] photo =showBean.getACT_PHOTO();
-//			圖片byteArray透過Base64轉字串，輸出到html
-	        String Photoencode = Base64.encodeBase64String(photo);
-
-			model.addAttribute("actid", actid);
-			model.addAttribute("title", title);
-			model.addAttribute("site", locationName);
-			model.addAttribute("startdate", startdate);
-			model.addAttribute("enddate", enddate);
-			model.addAttribute("description", description);
-			model.addAttribute("photo", Photoencode);
-
-			return IdentityFilter.loginID+"04/front_saleTicket/showDetail";
 		}
 		
 		

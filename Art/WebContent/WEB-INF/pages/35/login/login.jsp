@@ -23,12 +23,8 @@ fieldset {
 	width: 400px;
 	margin: 0 auto;
 }
-
-.pass {
-	display: none;
-}
-.pass {
-	color: red;
+#sendData {
+	display:none;
 }
 /* .grecaptcha-badge { 
     display: none;
@@ -36,27 +32,25 @@ fieldset {
 </style>
 <body>
 	<!-- start banner Area -->
-	<section class="banner-area relative" id="home">
-		<div class="overlay overlay-bg"></div>
-		<div class="container">
-			<div class="row d-flex align-items-center justify-content-center">
-				<div class="about-content col-lg-12">
-					<h1 class="text-white">Login</h1>
-					<p class="text-white link-nav">
-						<a href="index.html">Home </a> <span class="lnr lnr-arrow-right"></span>
-						<a href="elements.html"> Login</a>
-					</p>
+		<section class="banner-area relative" id="home">	
+			<div class="overlay overlay-bg"></div>
+			<div class="container">
+				<div class="row d-flex align-items-center justify-content-center">
+					<div class="about-content col-lg-12">
+						<h1 class="text-white">
+							Login
+						</h1>	
+						<p class="text-white link-nav"><a href="index.html">Home </a>  <span class="lnr lnr-arrow-right"></span>  <a href="elements.html"> Login</a></p>
+					</div>											
 				</div>
 			</div>
-		</div>
-	</section>
+		</section>
 	<!-- End banner Area -->
-	<br>
-	<br>
 	<fieldset>
+		<br><br>
 		<legend>請輸入帳號密碼</legend>
 		<c:url var="url" value='/35/loginCheck.ctrl' />
-		<form:form name="loginForm" action="${url}" method="POST" modelAttribute="member">
+		<form:form action="${url}" method="POST" modelAttribute="member">
 			<table class="loginForm">
 				<tr>
 					<td colspan=2 class="authError">${authError}</td>
@@ -68,33 +62,33 @@ fieldset {
 				</tr>
 				<tr>
 					<td><form:label path="password">密碼:</form:label></td>
-					<td><form:input type="password" path="password"
-							value="${password}" /></td>
+					<td><form:input type="password" path="password" value="${password}" /></td>
 					<td class="errors">${errors.pwd}</td>
 				</tr>
 				<tr>
 					<td><label>記住密碼:</label></td>
 					<td><input type="checkbox" name="rememberMe"
-						<c:if test='${requestScope.rememberMe==true}'>
+					    <c:if test='${requestScope.rememberMe==true}'>
 					    checked='checked'
-              			</c:if>
+              			</c:if>  
 						value="yes" /></td>
 				</tr>
 <!-- 				<tr> -->
-<%-- 					<td style="padding-top: 20px;"><form:button value="Send" --%>
-<%-- 							name ="submitButton" id='sendData' >真的登入按鈕</form:button></td> --%>
+<!-- 					<td colspan="2"> -->
+<!-- 						<button class='captcha'>點我進行驗證</button> -->
+<!-- 					</td> -->
 <!-- 				</tr> -->
 				<tr>
-					<td colspan=2 style="padding-top: 20px;"><p class="pass"></p></td>
+					<td style="padding-top: 20px;"><form:button value="Send"
+							id='sendData'>登入</form:button></td>
 				</tr>
 			</table>
 		</form:form>
-		<button class='captcha'>登入</button>
+		<button class='captcha'>我不是機器人</button>
 	</fieldset>
 	<div class="newImg"></div>
-
-	<script
-		src="https://www.google.com/recaptcha/api.js?render=6Lc_wOQZAAAAALKDlGGuMLE_iV-rjKJIYMHI9Fj6"></script>
+	
+	<script src="https://www.google.com/recaptcha/api.js?render=6Lc_wOQZAAAAALKDlGGuMLE_iV-rjKJIYMHI9Fj6"></script>
 	<script type="text/javascript">
 		const CAPTCHA_CLIENT_SECRET = "6Lc_wOQZAAAAALKDlGGuMLE_iV-rjKJIYMHI9Fj6";
 		window.onload = () => {
@@ -129,23 +123,10 @@ fieldset {
 // 								取Key對應value用message.score或message["score"]
 //                              JSONObject.key，可以抓出key的value
 								if (message.score >= 0.8){
-									let pass = document.querySelector('.pass');
-									pass.style.display = "block";
-									pass.innerHTML="reCAPTCHA評分: "+message.score+"<br>驗證通過，您不是機器人<br>3秒後自動登入";
-
-									let delayInMilliseconds = 1000; //1 second
-									setTimeout(() => {
-										 // code to be executed after 1 second
-										pass.innerHTML="reCAPTCHA評分: "+message.score+"<br>驗證通過，您不是機器人<br>2秒後自動登入";
-										}, delayInMilliseconds);
-									setTimeout(() => {
-										 // code to be executed after 2 second
-										pass.innerHTML="reCAPTCHA評分: "+message.score+"<br>驗證通過，您不是機器人<br>1秒後自動登入";
-										}, delayInMilliseconds+1000);
-									setTimeout(() => {
-										 // code to be executed after 3 second
-										loginForm.submit();
-									}, delayInMilliseconds+2000);
+									console.log("產出登入按鈕");
+									let loginButton = document.querySelector('#sendData');
+									loginButton.style.display = "block";
+// 									document.querySelector('#sendData').click();
 								}
 							});
 						}
@@ -153,7 +134,7 @@ fieldset {
 				});
 			});
 
-//			測試程序化登入google評分
+//			測試程序化讀取
 // 			for(i=0;i<10;i++){
 // 				document.querySelector('.captcha').click();
 // 			}

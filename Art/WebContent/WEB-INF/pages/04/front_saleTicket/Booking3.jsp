@@ -34,29 +34,22 @@
         }
     </style>
 
+<!-- CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+
+<!-- jQuery and JS bundle w/ Popper.js -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+
+
 </head>
 
 <body>
 
-<!-- start banner Area -->
-			<section class="banner-area relative" id="home">	
-				<div class="overlay overlay-bg"></div>
-				<div class="container">
-					<div class="row d-flex align-items-center justify-content-center">
-						<div class="about-content col-lg-12">
-							<h1 class="text-white">
-								AAART Shop
-							</h1>	
-							<p class="text-white link-nav"><a href="index.html">Home </a>  <span class="lnr lnr-arrow-right"></span>  <a href="<c:url value='/14/shopListController.ctrl' />"> Shop</a></p>
-						</div>											
-					</div>
-				</div>
-			</section>
-	<!-- End banner Area -->
 
 <div class="container">
 
-<br><br><table>
+<table>
 	<tr >
 		<td class="progressbar">Step 1</td>
 		<td class="progressbar">Step 2</td>
@@ -74,12 +67,12 @@
 
 	</tr>
 	<tr>
-		<td>區域/張數</td>
-		<td>劃位</td>
+		<td>選擇區域</td>
+		<td>選擇張數</td>
 		<td>購票確認</td>
 		<td>完成訂購</td>
 	</tr>
-	</table><br><br>
+	</table>
 
 
 
@@ -89,25 +82,23 @@
 
 
 <form name="order2" action="<c:url value='/04/booking3'/> " method="get">
-<%-- <c:set var="name" value="${param.name}" scope="session"/>  --%>
-<%-- <c:set var="email" value="${param.email}" scope="session"/>  --%>
-<%-- <c:set var="tel" value="${param.tel}" scope="session"/>  --%>
-<%-- <c:set var="add" value="${param.add}" scope="session"/>  --%>
-<%-- <c:set var="totalprice" value="${param.total3}" scope="session"/>  --%>
-    
-    <form name="order" action="" method="get">
+<c:set var="name" value="${param.name}" scope="session"/> 
+<c:set var="email" value="${param.email}" scope="session"/> 
+<c:set var="tel" value="${param.tel}" scope="session"/> 
+<c:set var="add" value="${param.add}" scope="session"/> 
+<c:set var="totalprice" value="${param.total3}" scope="session"/> 
     <H1>確認訂單資訊</H1>
     <table class= "table table-bordered">
         <tr>
             <td>訂購人姓名
             </td>
-            <td>${sessionScope.shoppingcart.NAME}</td>
+            <td>${name}</td>
         </tr>
         <tr>
             <td>電子郵件
             </td>
             <td>
-             ${sessionScope.shoppingcart.EMAIL}
+             ${email}
              </td>
         </tr>
         <tr>
@@ -115,93 +106,60 @@
             </td>
             <td>
             
-             ${sessionScope.shoppingcart.TEL}
+             ${tel}
             </td>
         </tr>
         <tr>
             <td>地址
             </td>
             <td>
-             ${sessionScope.shoppingcart.ADDRESS}
+             ${add}
             </td>
         </tr>
      </table><br><br> <br>  
-     
-     	<H2>訂購票券</H2>
-		<table class="table table-bordered">
-		<tr> 
-				<td>節目名稱</td>
-				<td>票種</td>
-				<td>座位</td>
-				<td>票價</td>
-				<td>數量</td>
 
-			</tr>
-			<tr> 
-				<td class="title">${sessionScope.shoppingcart.TITLE}</td>
-				<td>半票</td>
-				<td></td>
-				<td>NT$1000</td>
-				<td><input type="button" value="-" name="minus" class="" id="minus"> 
-					<input type="text" name="adultnum"id="adultnum" class="adultnum" value="" readonly="readonly"> 
-					<input type="button" value="+" name="plus" class="" id="plus">
-				</td>
-			</tr>
-						<tr> 
-				<td class="title">${sessionScope.shoppingcart.TITLE}</td>
-				<td>全票</td>
-				<td></td>
-				<td>NT$2000</td>
-				<td><input type="button" value="-" name="minus2" class="" id="minus2">
-					<input type="text" name="halfnum" id="halfnum" class="halfnum"value="" readonly="readonly"> 
-					<input type="button" value="+" name="plus2"class="" id="plus2" >
-				</td>
-			</tr>
-		</table>	
-     
-
-<!--       <table class= "table table-bordered">   -->
+      <table class= "table table-bordered">  
         
-<!--         <tr> -->
-<!--             <td class="title">節目名稱</td> -->
-<!--             <td>票種</td> -->
-<!--             <td>數量</td> -->
-<!--             <td>價格</td> -->
-<!--             <td class="price2">總價</td> -->
+        <tr>
+            <td class="title">節目名稱</td>
+            <td>票種</td>
+            <td>數量</td>
+            <td>價格</td>
+            <td class="price2">總價</td>
            
-<!--         </tr> -->
+        </tr>
         
-<!--          </tr> -->
-<%--         使用JSTL 執行for loop ${show.no}取map內value --%>
-<%--         <c:forEach items="${cartlist}" var="show" varStatus="idx"> --%>
-<!--         <tr> -->
-<!--        傳送訂單資訊 -->
-<!--        <form name="order" action="" method="get"> -->
-<!-- 		<tr> -->
-<%--             <td>${show.title}</td> --%>
-<!--             <td>全票</td> -->
-<%--             <td>${show.halfnum}</td>   --%>
-<!--            <td name="price" class="price" id="price" >1000</td> -->
-<%--             <td>${show.total1}</td> --%>
+         </tr>
+        <%--使用JSTL 執行for loop ${show.no}取map內value --%>
+        <c:forEach items="${cartlist}" var="show" varStatus="idx">
+        <tr>
+       <!-- 傳送訂單資訊 -->
+       <form name="order" action="" method="get">
+		<tr>
+            <td>${show.title}</td>
+            <td>全票</td>
+            <td>${show.halfnum}</td>  
+           <td name="price" class="price" id="price" >1000</td>
+            <td>${show.total1}</td>
            
-<!--          </tr> -->
-<!--          <tr> -->
+         </tr>
+         <tr>
          
      
          
-<%--             <td>${show.title}</td> --%>
-<!--             <td>半票</td> -->
-<%--             <td>${show.halfnum}</td>          --%>
-<!--             <td name="price" class="price" id="price" >500</td> -->
-<%--             <td>${show.total2}</td> --%>
-<!--         </tr> -->
-<!-- 			</form> -->
+            <td>${show.title}</td>
+            <td>半票</td>
+            <td>${show.halfnum}</td>         
+            <td name="price" class="price" id="price" >500</td>
+            <td>${show.total2}</td>
+        </tr>
+			</form>
 			
 			
-<%-- 		</c:forEach>        --%>
-<%--         <tr><td>總計</td><td></td><td></td><td></td><td>${totalprice}</td><tr> --%>
+		</c:forEach>       
+        <tr><td>總計</td><td></td><td></td><td></td><td>${totalprice}</td><tr>
 
-<!--     </table><br> -->
+    </table><br>
     </form>
           <input type="button" value="修改訂單" name="" class="btn btn-outline-info" id="" onclick="history.back()">  
           <input type="submit" value="送出訂單" name="1" class="btn btn-outline-info" id="1">  

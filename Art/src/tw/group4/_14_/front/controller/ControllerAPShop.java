@@ -1,6 +1,10 @@
 package tw.group4._14_.front.controller;
 
+import static org.hamcrest.CoreMatchers.nullValue;
+
 import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Blob;
 import java.util.ArrayList;
@@ -135,6 +139,7 @@ public class ControllerAPShop {
 		m.addAttribute("oneProsuct", product);
 		m.addAttribute("query", query);
 		return IdentityFilter.loginID+"14/14_showOnePdF";
+
 	}
 	
 	
@@ -202,14 +207,27 @@ public class ControllerAPShop {
 		if (carList == null) {
 
 //			return "redirect:/14/shopListController.ctrl";
-			return "14_CRUDPage";
+			return "redirect:/14/shopListController.ctrl";
 		} else {
 
-			return IdentityFilter.loginID+"14/14_OrderConfirm";
+			return IdentityFilter.loginID+"14/14_OrderConfirm1";
 
 		}
 
 	}
+	
+	
+
+	@RequestMapping(path = "/14/test.ctrl")
+	public String test(HttpSession session) {
+
+		
+			return IdentityFilter.loginID+"14/Table";
+
+		
+
+	}
+	
 	
 	@RequestMapping(path = "/14/getBlobImage/{pdid}.ctrl")
 	@ResponseBody
@@ -221,6 +239,8 @@ public class ControllerAPShop {
 		String mimeType = ctx.getMimeType("ThisIsFake.jpg");
 		MediaType mediaType = MediaType.valueOf(mimeType);
 		HttpHeaders headers = new HttpHeaders();
+		
+		
 		
 		try {
 //			ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -234,6 +254,74 @@ public class ControllerAPShop {
 			headers.setCacheControl(CacheControl.noCache().getHeaderValue()); //設定取消 cache
 //			re = new ResponseEntity<byte[]>(baos.toByteArray(), headers, HttpStatus.OK);
 			re = new ResponseEntity<byte[]>(pd.getProductImgBlob(), headers, HttpStatus.OK);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return re;
+		
+	}
+	
+	
+//	@SuppressWarnings("resource")
+	@RequestMapping(path = "/14/getStarImage/{pdid}.ctrl")
+	@ResponseBody
+	public ResponseEntity<byte[]> getStarImage(@PathVariable(name = "pdid") String pdId) throws IOException{
+		
+		ResponseEntity<byte[]> re = null;
+		ARTProduct pd = pDaoservice.select(pdId);
+		
+		String mimeType = ctx.getMimeType("ThisIsFake.jpg");
+		MediaType mediaType = MediaType.valueOf(mimeType);
+		HttpHeaders headers = new HttpHeaders();
+		
+		Integer productRater = pd.getProductRater();
+		Integer productScore = pd.getProductScore();
+		
+		if (productScore==null ) {
+			productScore = 1;
+		}
+		
+		if (productRater == null ) {
+			productRater = 1;
+		}
+		
+		int starScore = (int)(productScore/productRater);
+		
+		InputStream inputStream = null;
+		byte[] readAllBytes = null;
+		
+		if (starScore < 2) {
+			
+			inputStream = new FileInputStream(ctx.getRealPath("/WEB-INF/pages/images/star_1.jpg"));
+			readAllBytes = inputStream.readAllBytes();
+			
+		}else if (starScore < 3) {
+			inputStream = new FileInputStream(ctx.getRealPath("/WEB-INF/pages/images/star_2.jpg"));
+			readAllBytes = inputStream.readAllBytes();
+			
+		}else if (starScore < 4) {
+			
+			inputStream = new FileInputStream(ctx.getRealPath("/WEB-INF/pages/images/star_3.jpg"));
+			readAllBytes = inputStream.readAllBytes();
+			
+		}else if (starScore < 5){
+			
+			inputStream = new FileInputStream(ctx.getRealPath("/WEB-INF/pages/images/star_4.jpg"));
+			readAllBytes = inputStream.readAllBytes();
+			
+		}else {
+			
+			inputStream = new FileInputStream(ctx.getRealPath("/WEB-INF/pages/images/star_5.jpg"));
+			readAllBytes = inputStream.readAllBytes();
+			
+		}
+		
+		
+		try {
+			headers.setContentType(mediaType);
+			headers.setCacheControl(CacheControl.noCache().getHeaderValue()); //設定取消 cache
+			re = new ResponseEntity<byte[]>(readAllBytes, headers, HttpStatus.OK);
 
 		} catch (Exception e) {
 			e.printStackTrace();

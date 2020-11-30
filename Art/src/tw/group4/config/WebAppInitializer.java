@@ -13,7 +13,6 @@ import org.springframework.web.filter.HiddenHttpMethodFilter;
 import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
-import tw.group4.util.IdentityFilter;
 import tw.group4.util.OpenSessionViewFilter;
 
 //地位等同web.xml，第二行設定及連結過去的class取代mvc-servlet.xml
@@ -66,10 +65,6 @@ public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServlet
 		sessionFilterRegistration.addMappingForUrlPatterns(null, true, "*.ctrl");
 //		加下面這行會害上面那行映射路徑設定失效
 //		sessionFilterRegistration.addMappingForServletNames(null, true, "mvc");
-		
-//		設定IdentityFilter
-		FilterRegistration.Dynamic identityFilterRegistration  = servletContext.addFilter("IdentityFilter", IdentityFilter.class);
-		identityFilterRegistration.addMappingForUrlPatterns(null, true, "/*");
 		
 //		編碼過濾器註冊
 //		這是設定request編碼的方法二filter，設定context啟動時做什麼事

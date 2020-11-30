@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import tw.group4._14_.back.ARTProduct;
-import tw.group4._14_.front.model.OrderListBeamAP;
 
 
 
@@ -41,7 +40,7 @@ public class ProductBeanDAOService {
 	}
 	
 
-//	@Transactional(rollbackFor = Throwable.class)
+	@Transactional(rollbackFor = Throwable.class)
 	public ARTProduct select(String productId) {
 		 return pDAO.select(productId);
 	 }
@@ -83,10 +82,6 @@ public class ProductBeanDAOService {
 	
 	public int getQueryPages(String query) {
 		return pDAO.getQueryPages(query);
-	}
-	
-	public List<OrderListBeamAP> selectUserOrderListNoPage() {
-		return pDAO.selectUserOrderListNoPage();
 	}
 	
 }

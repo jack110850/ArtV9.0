@@ -5,10 +5,8 @@ package tw.group4._04_.back.model;
 import java.io.Serializable;
 import java.sql.Blob;
 
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -85,35 +83,10 @@ public class ShowBean implements Serializable{
 	private String ACT_ENDDATE;
 	
 	@Column(name = "ACT_PHOTO")
-	@Lob 
-//	@Basic(fetch = FetchType.LAZY)
+	@Lob
 	private byte[] ACT_PHOTO;
 
 
-
-//	public ShowBean(int aCT_NO, String aCT_TITLE, int aCT_CATEGORY, String aCT_LOCATION, String aCT_LOCATION_NAME,
-//			String aCT_ON_SALES, String aCT_PRICE, String aCT_TIME, String aCT_ENDTIME, String aCT_MAINUNIT,
-//			String aCT_SHOWUNIT, String aCT_COMMENT, String aCT_DESCRIPTION, String aCT_IMAGE, String aCT_STARTDATE,
-//			String aCT_ENDDATE ) {
-//		
-//		 this.ACT_NO = aCT_NO;
-//		 this.ACT_TITLE = aCT_TITLE;
-//		 this.ACT_CATEGORY = aCT_CATEGORY;
-//		 this.ACT_LOCATION = aCT_LOCATION;
-//		 this.ACT_LOCATION_NAME = aCT_LOCATION_NAME;
-//		 this.ACT_ON_SALES = aCT_ON_SALES;
-//		 this.ACT_PRICE = aCT_PRICE;
-//		 this.ACT_TIME = aCT_TIME;
-//		 this.ACT_ENDTIME = aCT_ENDTIME;
-//		 this.ACT_MAINUNIT = aCT_MAINUNIT;
-//		 this.ACT_SHOWUNIT = aCT_SHOWUNIT;
-//		 this.ACT_COMMENT = aCT_COMMENT;
-//		 this.ACT_DESCRIPTION = aCT_DESCRIPTION;
-//		 this.ACT_IMAGE = aCT_IMAGE;
-//		 this.ACT_STARTDATE = aCT_STARTDATE;
-//		 this.ACT_ENDDATE = aCT_ENDDATE;
-//		
-//	}
 
 	public byte[] getACT_PHOTO() {
 		return ACT_PHOTO;

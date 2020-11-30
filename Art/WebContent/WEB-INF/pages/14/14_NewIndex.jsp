@@ -73,16 +73,8 @@ $(function(){
 						<option value="pen">文具</option>
 					</select>
 				</div>
-				
 			</div>
-			<br>
 			
-			<div style="text-align: center;">
-				<FORM ACTION="gotoCart.ctrl">
-                <input type="hidden" name="method" value="order"/>
-                <input type="submit" style="margin-left: 10px;" class="genric-btn primary-border small" name="check" value="前往結帳頁面">
-                </FORM>
-			</div>
 			<hr>
 										
 					<div class="row justify-content-center">
@@ -140,15 +132,6 @@ $(function(){
 					</select>
 				</div>
 			</div>
-				<br>
-				
-				<div style="text-align: center;">
-				<FORM ACTION="gotoCart.ctrl">
-                <input type="hidden" name="method" value="order"/>
-                <input type="submit" style="margin-left: 10px;" class="genric-btn primary-border small" name="check" value="前往結帳頁面">
-                </FORM>
-                </div>
-				
 			
 			<hr>
 										

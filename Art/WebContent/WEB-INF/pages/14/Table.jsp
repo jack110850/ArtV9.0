@@ -6,9 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.css">
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.js"></script>
 <script>
 $(document).ready( function () {
     $('#table_id').DataTable();
@@ -17,6 +15,23 @@ $(document).ready( function () {
 </head>
 <body>
 
+<!-- start banner Area -->
+			<section class="banner-area relative" id="home">	
+				<div class="overlay overlay-bg"></div>
+				<div class="container">
+					<div class="row d-flex align-items-center justify-content-center">
+						<div class="about-content col-lg-12">
+							<h1 class="text-white">
+								AAART Shop
+							</h1>	
+							<p class="text-white link-nav"><a href="index.html">Home </a>  <span class="lnr lnr-arrow-right"></span>  <a href="<c:url value='/14/shopListController.ctrl' />"> Shop</a></p>
+						</div>											
+					</div>
+				</div>
+			</section>
+	<!-- End banner Area -->	
+<br>
+<div class="container">
 <table id="table_id" class="display">
     <thead>
         <tr>
@@ -35,5 +50,6 @@ $(document).ready( function () {
         </tr>
     </tbody>
 </table>
+</div>
 </body>
 </html>

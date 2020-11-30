@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 public class EmailServiceImpl  {
 	
 	//注入JavaMailSender
-    @Autowired
+//    @Autowired
     private JavaMailSender emailSender;
     
     //簡單mail寄送

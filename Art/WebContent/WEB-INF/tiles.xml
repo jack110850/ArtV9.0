@@ -4,37 +4,37 @@
       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 <tiles-definitions>
 
- 		<!-- 六種視角的homePage路徑設定 --> 
-<!-- 	<definition name="homePageA" extends="visitor.definition"> -->
-<!-- 		<put-attribute name="title" value="homePage" /> -->
-<!-- 		<put-attribute name="body" -->
-<!-- 			value="/WEB-INF/bodyfragments/_home.jsp" /> -->
-<!-- 	</definition> -->
-<!-- 	<definition name="homePageB" extends="user.definition"> -->
-<!-- 		<put-attribute name="title" value="homePage" /> -->
-<!-- 		<put-attribute name="body" -->
-<!-- 			value="/WEB-INF/bodyfragments/_home.jsp" /> -->
-<!-- 	</definition> -->
-<!-- 	<definition name="homePageC" extends="admin.definition"> -->
-<!-- 		<put-attribute name="title" value="homePage" /> -->
-<!-- 		<put-attribute name="body" -->
-<!-- 			value="/WEB-INF/bodyfragments/_home.jsp" /> -->
-<!-- 	</definition> -->
-<!-- 	<definition name="homePageD" extends="userMemberArea.definition"> -->
-<!-- 		<put-attribute name="title" value="homePage" /> -->
-<!-- 		<put-attribute name="body" -->
-<!-- 			value="/WEB-INF/bodyfragments/_home.jsp" /> -->
-<!-- 	</definition> -->
-<!-- 	<definition name="homePageE" extends="adminMemberArea.definition"> -->
-<!-- 		<put-attribute name="title" value="homePage" /> -->
-<!-- 		<put-attribute name="body" -->
-<!-- 			value="/WEB-INF/bodyfragments/_home.jsp" /> -->
-<!-- 	</definition> -->
-<!-- 	<definition name="homePageF" extends="adminBackstage.definition"> -->
-<!-- 		<put-attribute name="title" value="homePage" /> -->
-<!-- 		<put-attribute name="body" -->
-<!-- 			value="/WEB-INF/bodyfragments/_home.jsp" /> -->
-<!-- 	</definition> -->
+	<!-- 六種視角的homePage路徑設定 -->
+	<definition name="homePageA" extends="visitor.definition">
+		<put-attribute name="title" value="homePage" />
+		<put-attribute name="body"
+			value="/WEB-INF/bodyfragments/_home.jsp" />
+	</definition>
+	<definition name="homePageB" extends="user.definition">
+		<put-attribute name="title" value="homePage" />
+		<put-attribute name="body"
+			value="/WEB-INF/bodyfragments/_home.jsp" />
+	</definition>
+	<definition name="homePageC" extends="admin.definition">
+		<put-attribute name="title" value="homePage" />
+		<put-attribute name="body"
+			value="/WEB-INF/bodyfragments/_home.jsp" />
+	</definition>
+	<definition name="homePageD" extends="userMemberArea.definition">
+		<put-attribute name="title" value="homePage" />
+		<put-attribute name="body"
+			value="/WEB-INF/bodyfragments/_home.jsp" />
+	</definition>
+	<definition name="homePageE" extends="adminMemberArea.definition">
+		<put-attribute name="title" value="homePage" />
+		<put-attribute name="body"
+			value="/WEB-INF/bodyfragments/_home.jsp" />
+	</definition>
+	<definition name="homePageF" extends="adminBackstage.definition">
+		<put-attribute name="title" value="homePage" />
+		<put-attribute name="body"
+			value="/WEB-INF/bodyfragments/_home.jsp" />
+	</definition>
 	
 	<!-- A: visitor Define -->
 	<definition name="visitor.definition"
@@ -71,24 +71,26 @@
 	
 	<!-- D: userMemberArea Define -->
 	<definition name="userMemberArea.definition"
-		template="/WEB-INF/layouts/classic3.jsp">
+		template="/WEB-INF/layouts/classic1.jsp">
 		<put-attribute name="title" value="" />
 		<put-attribute name="header"
-			value="/WEB-INF/basefragments/top_memberDisD2.jsp" />
+			value="/WEB-INF/basefragments/top_memberDisD.jsp" />
 		<put-attribute name="body" value="" />
 		<put-attribute name="footer"
-			value="/WEB-INF/basefragments/footer.jsp" />
+			value="/WEB-INF/basefragments/_footer.jsp" />
 	</definition>
 	
 	<!-- E: adminMemberArea Define -->
 	<definition name="adminMemberArea.definition"
-		template="/WEB-INF/layouts/classic3.jsp">
+		template="/WEB-INF/layouts/classic1.jsp">
 		<put-attribute name="title" value="" />
 		<put-attribute name="header"
-			value="/WEB-INF/basefragments/top_memberDisE2.jsp" />
+			value="/WEB-INF/basefragments/top_memberDisE.jsp" />
+		<put-attribute name="menu"
+			value="/WEB-INF/basefragments/_menuE.jsp" />
 		<put-attribute name="body" value="" />
 		<put-attribute name="footer"
-			value="/WEB-INF/basefragments/footer.jsp" />
+			value="/WEB-INF/basefragments/_footer.jsp" />
 	</definition>
 	
 	<!-- F: adminBackstage Define -->

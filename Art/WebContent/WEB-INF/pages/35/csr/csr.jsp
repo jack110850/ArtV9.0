@@ -13,22 +13,6 @@
       </style>
    </HEAD>
 <BODY BGCOLOR="#FFFFFF">
-	<!-- start banner Area -->
-	<section class="banner-area relative" id="home">
-		<div class="overlay overlay-bg"></div>
-		<div class="container">
-			<div class="row d-flex align-items-center justify-content-center">
-				<div class="about-content col-lg-12">
-					<h1 class="text-white">企業租借場地與贊助</h1>
-					<p class="text-white link-nav">
-						<a href="index.html">Home </a> <span class="lnr lnr-arrow-right"></span>
-						<a href="<c:url value='/35/csr' />">企業租借場地與贊助</a>
-					</p>
-				</div>
-			</div>
-		</div>
-	</section>
-	<!-- End banner Area -->
 <c:set var="funcName" value="CSR" scope="session"/>
 	<br>
 	<H1>贊助偏鄉孩童參加藝文活動</H1>

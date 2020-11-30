@@ -41,9 +41,8 @@ fieldset {
 			</div>
 		</section>
 	<!-- End banner Area -->
-	<br>
-	<br>
 	<fieldset>
+	<br><br>
 		<legend>請填寫下列資料</legend>
 		<c:url var="url" value='/35/registerCheck.ctrl' />
 		<form:form action="${url}" method="POST" enctype="multipart/form-data"

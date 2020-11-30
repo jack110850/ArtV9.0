@@ -9,7 +9,7 @@
 </head>
 <body>
 	<br>
-	<div class="title">
+	<div class=title>
 		<h1 align="center">目前開放租借的場地如下</h1>
 	</div>
 	<div class="back" align="right">
@@ -42,7 +42,7 @@
 		</form>
 	</div>
 	<br>
-	<div class="content">
+	<div class=content>
 		<table id="35"
 			class="display table table-bordered table-hover table-blue">
 			<thead>

@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.List;
 
 import org.hibernate.Session;
-import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,20 +38,15 @@ public class ShowBeanService {
 	}
 
 
-	public List<ShowBean2> selectAll() {	
+	public List<ShowBean> selectAll() {	
 		return SDao.selectAll();
 	}
 	
-	public List<ShowBean2>selectAll_startdate() {	
+	public List<ShowBean>selectAll_startdate() {	
 		return SDao.selectAll_startdate();
 	}
 	
-	public List<ShowBean2> selectAll_category(int category) {
-		
-		return SDao.selectAll_category(category);
-	}
-	
-	public List<ShowBean2> selectAll_enddate() {
+	public List<ShowBean> selectAll_enddate() {
 		return SDao.selectAll_enddate();
 	}
 	
@@ -82,7 +76,7 @@ public class ShowBeanService {
 		return SDao.delete(actid);
 	}
 
-	public List<ShowBean2> find(String searchString){
+	public List<ShowBean> find(String searchString){
 		return SDao.find(searchString);
 	}
 

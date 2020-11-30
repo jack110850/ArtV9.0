@@ -1,12 +1,7 @@
 package tw.group4._35_.login.model;
 
-import java.sql.Blob;
-import java.sql.SQLException;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 
 @Service
 public class WebsiteMemberService {
@@ -20,10 +15,6 @@ public class WebsiteMemberService {
 	
 	public WebsiteMember insert(WebsiteMember wmBean) {
 		return dao.insert(wmBean);
-	}
-	
-	public int insertWithResult(WebsiteMember wmBean) {
-		return dao.insertWithResult(wmBean);
 	}
 	
 	//按id讀取資料庫內會員的方法
@@ -46,26 +37,7 @@ public class WebsiteMemberService {
 		return dao.getMemberFullInfo(member);
 	}
 	
-	//傳入登入表單輸入會員資料，回傳會員完整資料+圖片ByteArray放到session
 	public byte[] getMemberPicByteArray(WebsiteMember member) {
-		WebsiteMember memberResult = dao.getMemberFullInfo(member);
-		Blob blob = memberResult.getMemberPic();
-		
-//		Blob轉byteArray須設定Blob.getBytes(long pos, int length)
-		byte[] byteArray = null;
-		try {
-			byteArray = blob.getBytes(1, (int) blob.length());
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-		return byteArray;
+		return dao.getMemberPicByteArray(member);
 	}
-	
-//	查詢會員表格所有資料
-	public List<WebsiteMember> selectAllMembers(){
-
-		return dao.selectAllMembers();
-	}
-	
 }

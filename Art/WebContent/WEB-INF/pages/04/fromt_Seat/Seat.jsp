@@ -33,28 +33,10 @@
 </style>
 </head>
 <body>
-
-<!-- start banner Area -->
-			<section class="banner-area relative" id="home">	
-				<div class="overlay overlay-bg"></div>
-				<div class="container">
-					<div class="row d-flex align-items-center justify-content-center">
-						<div class="about-content col-lg-12">
-							<h1 class="text-white">
-								AAART Shop
-							</h1>	
-							<p class="text-white link-nav"><a href="index.html">Home </a>  <span class="lnr lnr-arrow-right"></span>  <a href="<c:url value='/14/shopListController.ctrl' />"> Shop</a></p>
-						</div>											
-					</div>
-				</div>
-			</section>
-	<!-- End banner Area -->
-	
 	<c:set var="seat" value="${requestScope.seat}" />
 
 <div class="container">
-<form name="order" action="<c:url value='/04/shoppingcart.ctrl'/>" method="get">
-	<br><br><table>
+	<table>
 	<tr >
 		<td class="progressbar">Step 1</td>
 		<td class="progressbar">Step 2</td>
@@ -66,21 +48,20 @@
 		<div class="progress">
 <!-- 		28  -->
 		<a class="process-wizard-dot"></a>
-  		<div class="progress-bar progress-bar-striped bg-info" role="progressbar" style="width: 28%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+  		<div class="progress-bar progress-bar-striped bg-info" role="progressbar" style="width: 3%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
 		</div>
 	</td>
 
 	</tr>
 	<tr>
-		<td>區域/張數</td>
-		<td>劃位</td>
+		<td>選擇區域</td>
+		<td>選擇張數</td>
 		<td>購票確認</td>
 		<td>完成訂購</td>
 	</tr>
-	</table><br>
+	</table>
 	
 	
-	<h1 id=ticketnum>${sessionScope.shoppingcart.TICKET_NUM}</h1>
 	<h1>座位表</h1>
 	<h2>請勾選位置</h2>
 	<p>請在灰色空位上點選您要的位置</p>
@@ -90,17 +71,13 @@
 		<td id="showseat" ></td>
 	</tr>
 	<tr id="selectseattr" >
-		<td>已選擇的座位資訊 </td>
+		<td>已選擇的排號資訊 </td>
 		<td id="selectseat"></td>
-<!-- 		<input type="hidden" value="" id="" name="seat1"/> -->
-<!-- 		<input type="hidden" value="" id="" name="seat2"/> -->
-<!-- 		<input type="hidden" value="" id="" name="seat3"/> -->
-<!-- 		<input type="hidden" value="" id="" name="seat4"/> -->
+		<input type="hidden" value="" id=""/>
 	</tr>
 	<tr>
 		<td>已選擇座位數量</td>
 		<td id="selectnum"></td>
-		<input type="hidden" value="" id="selectnum2" name="selectnum2"/>
 	</tr>
 	</table>
 
@@ -183,7 +160,7 @@
 			<td><img src="<c:url value='/images/04/sofaTick.png' />" alt="" title=""class="sofademo">已加入購物車</td>
 		</tr>
 	</table>
-	
+	<form name="order" action="<c:url value='/04/booking'/>" method="get">
 	<br><br><input type="submit" class="btn btn-outline-info" value="下一步">
 	</form>
 </div>	
@@ -205,21 +182,13 @@
  			//隱藏選取框
  			$(this).css("border-color", "#FFFFFF")
  		}).click(function() {
- 			//座位數量大於4無法選取(換圖片)
- 			if ($(this).attr("src") == "<c:url value='/images/04/sofaOff.png' />" && $(".seat").length <parseInt($("#ticketnum").text())) {
+ 			if ($(this).attr("src") == "<c:url value='/images/04/sofaOff.png' />") {
  	 			//換成選取座位圖
- 				$(this).attr("src", "<c:url value='/images/04/sofaTick.png' />")		
- 				//新增td		
+ 				$(this).attr("src", "<c:url value='/images/04/sofaTick.png' />")				
  				$("#selectseat").append("<td class='seat' id='td"+$(this).attr('id')+"'>"+$(this).attr('id')+"<td>");
- 				$("#selectseat").append("<input type='hidden' name='seat' value='"+$(this).attr('id')+"'/>");				
-				//顯示數量
  				$("#selectnum").text($(".seat").length);
- 				$("#selectnum2").val($(".seat").length); 
- 				var tickstring=$("#ticketnum").text();
- 				var ticknum =parseInt(tickstring);			
- 				if ($(".seat").length ==parseInt($("#ticketnum").text())) {
- 					alert("已經選擇"+$(".seat").length+"個座位");
- 					
+ 				if ($(".seat").length ==5) {
+ 					alert("最多選擇五個座位");
 				}
  			} else {
  	 			//換回空位

@@ -15,7 +15,6 @@ import org.springframework.stereotype.Repository;
 import com.lowagie.text.pdf.codec.Base64;
 
 import tw.group4._14_.back.ARTProduct;
-import tw.group4._14_.front.model.OrderListBeamAP;
 
 
 
@@ -175,15 +174,6 @@ public class ProductBeanDAOImp {
 		Query countQuery = session.createQuery(countQ);
 		Query<ARTProduct> query = session.createQuery("From ARTProduct ap ORDER BY ap.productId", ARTProduct.class);
 		List<ARTProduct> list = query.list();
-		return list;
-	}
-	
-	public List<OrderListBeamAP> selectUserOrderListNoPage() {
-		Session session = sessionFactory.getCurrentSession();
-		String countQ = "Select count (ap.productId) From ARTProduct ap";
-		Query countQuery = session.createQuery(countQ);
-		Query<OrderListBeamAP> query = session.createQuery("From OrderListBeamAP od ORDER BY od.memberID", OrderListBeamAP.class);
-		List<OrderListBeamAP> list = query.list();
 		return list;
 	}
 	

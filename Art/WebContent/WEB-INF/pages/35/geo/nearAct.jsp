@@ -17,22 +17,6 @@ padding: 20px 25px;
 </style>
 <!-- </head> -->
 <!-- <body> -->
-	<!-- start banner Area -->
-	<section class="banner-area relative" id="home">
-		<div class="overlay overlay-bg"></div>
-		<div class="container">
-			<div class="row d-flex align-items-center justify-content-center">
-				<div class="about-content col-lg-12">
-					<h1 class="text-white">離我最近的活動</h1>
-					<p class="text-white link-nav">
-						<a href="index.html">Home </a> <span class="lnr lnr-arrow-right"></span>
-						<a href="<c:url value='/35/randomRecom.ctrl' />">離我最近的活動</a>
-					</p>
-				</div>
-			</div>
-		</div>
-	</section>
-	<!-- End banner Area -->
 <div class=title>
 	<h1>鄰近${userLocation}的藝文活動</h1>
 </div>

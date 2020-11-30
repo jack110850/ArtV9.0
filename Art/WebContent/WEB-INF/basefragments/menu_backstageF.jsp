@@ -9,7 +9,7 @@
 	<!-- Sidebar - Brand -->
 	<a
 		class="sidebar-brand d-flex align-items-center justify-content-center"
-		href="<c:url value='/adminEnterBackstage'/>"> <svg width="1.25em" height="1.25em"
+		href="index.html"> <svg width="1.25em" height="1.25em"
 			viewBox="0 0 16 16" class="bi bi-flower2" fill="currentColor"
 			xmlns="http://www.w3.org/2000/svg">
   <path fill-rule="evenodd"
@@ -25,7 +25,7 @@
 	<hr class="sidebar-divider my-0">
 
 	<!-- Nav Item - Dashboard -->
-	<li class="nav-item h5"><a class="nav-link" href="<c:url value='/adminEnterBackstage'/>"> <i
+	<li class="nav-item h5"><a class="nav-link" href="#"> <i
 			class="fa fa-tachometer" aria-hidden="true"></i> <span
 			style="font-size: medium;">主控台</span></a></li>
 	<li class="nav-item h5"><a class="nav-link" href="<c:url value='/adminLeaveBackstage' />"> <i
@@ -46,14 +46,14 @@
 	<li class="nav-item"><a class="nav-link collapsed" href="#"
 		data-toggle="collapse" data-target="#collapseUtilities"
 		aria-expanded="true" aria-controls="collapseUtilities"> <i
-			class="fas fa-users"></i> <span>還沒想好這個要叫什麼</span>
+			class="fas fa-users"></i> <span>企業功能資料管理</span>
 	</a>
 		<div id="collapseUtilities" class="collapse"
 			aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
 			<div class="bg-white py-2 collapse-inner rounded">
 				<h6 class="collapse-header">藝文活動服務:</h6>
-				<a class="collapse-item" href="<c:url value='/35/selectAll.ctrl' />">修改企業租借場地資訊</a> 
-				<a class="collapse-item" href="<c:url value='/35/memberEntry.ctrl' />">修改會員資訊</a>
+				<a class="collapse-item" href="<c:url value='/35/selectAll.ctrl' />">修改租借場地資訊</a> 
+				<a class="collapse-item" href="<c:url value='' />">修改贊助活動資訊</a>
 			</div>
 		</div></li>
 
@@ -92,8 +92,8 @@
 			aria-labelledby="headingPages" data-parent="#accordionSidebar">
 			<div class="bg-white py-2 collapse-inner rounded">
 				<h6 class="collapse-header">訂單修改:</h6>
-				<a class="collapse-item" href="<c:url value='/14/ShowAllOrderList.ctrl' />">訂單刪除</a> <a class="collapse-item"
-					href="<c:url value='/14/ShowAllOrderList.ctrl' />">訂單編輯</a>
+				<a class="collapse-item" href="#">訂單刪除</a> <a class="collapse-item"
+					href="#">訂單編輯</a>
 				<div class="collapse-divider"></div>
 				<h6 class="collapse-header">商品編輯:</h6>
 				<a class="collapse-item" href="<c:url value='/14/Create.ctrl' />">商品上架</a>
