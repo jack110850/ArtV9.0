@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+
+<hibernate-mapping>
+    <class name="projectLN.model_LN.Course_LN" table="COURSE_LN">
+        <id name="id" type="java.lang.String">
+            <column name="ID" />
+            <generator class="assigned" />
+        </id>
+        <property name="title" type="java.lang.String">
+            <column name="TITLE" />
+        </property>
+        <property name="act_Category" type="int">
+            <column name="ACT_CATEGORY" />
+        </property>        
+        <property name="act_location" type="java.lang.String">
+            <column name="ACT_LOCATION" />
+        </property>
+        <property name="location_name" type="java.lang.String">
+            <column name="LOCATION_NAME" />
+        </property>
+        <property name="on_sales" type="java.lang.String">
+            <column name="ON_SALES" />
+        </property>
+        <property name="price" type="int">
+            <column name="PRICE" />
+        </property>
+        <property name="act_time" type="java.lang.String">
+            <column name="ACT_TIME" />
+        </property>
+        <property name="end_time" type="java.lang.String">
+            <column name="END_TIME" />
+        </property>
+        <property name="main_unit" type="java.lang.String">
+            <column name="MAIN_UNIT" />
+        </property>
+        <property name="show_unit" type="java.lang.String">
+            <column name="SHOW_UNIT" />
+        </property>
+        <property name="act_comment" type="java.lang.String">
+            <column name="ACT_COMMENT" />
+        </property>
+        <property name="act_description" type="java.lang.String">
+            <column name="ACT_DESCRIPTION" />
+        </property>
+        <property name="act_image" type="java.lang.String">
+            <column name="ACT_IMAGE" />
+        </property>
+        <property name="start_date" type="java.lang.String">
+            <column name="START_DATE" />
+        </property>
+        <property name="end_date" type="java.lang.String">
+            <column name="END_DATE" />
+        </property>
+        
+    </class>
+</hibernate-mapping>

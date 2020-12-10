@@ -8,8 +8,6 @@
 <title>Insert title here</title>
 
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-<link rel="stylesheet" type="text/css"
-	href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.css">
 
 <style>
 .head, tfoot {
@@ -94,8 +92,7 @@ function reconfirmOrder(pid,page){
 			Page Heading
 			<h1 class="h3 mb-2 text-gray-800">商品編輯頁面</h1>
 			<p class="mb-4">
-				本處預計使用 DataTables 生成下表，等到學完 AJAX 之後應可以自動使用此插件進行排序與頁碼和每頁顯示筆數等功能。<br>
-				若想先學習如何使用，請訪問 <a target="_blank" href="https://datatables.net">official
+				想學習如何使用，請訪問 <a target="_blank" href="https://datatables.net">official
 					DataTables documentation</a>.
 			</p>
 
@@ -188,11 +185,25 @@ function reconfirmOrder(pid,page){
 					<!-- 					</div> -->
 
 
-					<script>
+<script>
 $(document).ready( function () {
     $('#dataTable').DataTable({
-
+    	language: {
+    		search: "在表格中搜尋：",
+    		lengthMenu:"每頁顯示 _MENU_ 筆資料",
+    		zeroRecords: "没有符合的结果",
+    		info: "顯示第 _START_ 至 _END_ 項结果，共 _TOTAL_ 項",
+    		infoEmpty: "顯示第 0 至 0 項结果，共 0 項",
+    		paginate: {
+                first: "首頁",
+                previous: "上一頁",
+                next: "下一頁",
+                last: "末頁"
+            },
+            infoFiltered: "(已比對 _MAX_ 項結果)",
     	
+    	}
+        	
     } );
 } );
 </script>

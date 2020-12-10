@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import tw.group4._11_.model.StreetArtistBean;
 import tw.group4._11_.model.StreetArtistBeanDAO;
+import tw.group4._11_.model.StreetArtistBeanService;
 import tw.group4.util.IdentityFilter;
 
 @Controller
@@ -24,7 +26,8 @@ import tw.group4.util.IdentityFilter;
 public class StreetArtistCtrl {
 	@Autowired
 	private StreetArtistBeanDAO sDao;
-
+	@Autowired
+	private StreetArtistBeanService sService;
 //	總覽
 	@RequestMapping(path = "/myStreetArtistPage.ctrl" ,method = RequestMethod.GET)
 	public String showingSA(Model m) {
@@ -159,5 +162,17 @@ public class StreetArtistCtrl {
 		m.addAttribute("reBeanList_SA",list);
 		
 		return IdentityFilter.loginID+"_11_SA/SearchReturn";
+	}
+	
+	@GetMapping(value = "/ToWebBack.ctrl")
+	public String toOtherWeb(
+			@RequestParam("id_SA") Integer sa,Model m
+			) {
+		List<StreetArtistBean> list = sService.searchID(sa);
+		int sal = sService.showSal(sa);
+		
+    	m.addAttribute("dataForWeb", list);
+		m.addAttribute("Donation",sal);
+    	return IdentityFilter.loginID +"_11_SA/AdViewSA";
 	}
 }

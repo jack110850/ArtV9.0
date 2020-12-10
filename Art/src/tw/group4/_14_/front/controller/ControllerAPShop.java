@@ -1,12 +1,9 @@
 package tw.group4._14_.front.controller;
 
-import static org.hamcrest.CoreMatchers.nullValue;
 
-import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -33,7 +30,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import tw.group4._14_.back.ARTProduct;
 import tw.group4._14_.back.dao.ProductBeanDAOService;
+import tw.group4._14_.front.model.MessageBoardAP;
 import tw.group4._14_.front.model.ShoppingCartAP;
+import tw.group4._14_.front.model.dao.MessageBoardAPService;
 import tw.group4.util.IdentityFilter;
 
 
@@ -46,6 +45,9 @@ public class ControllerAPShop {
 	
 	@Autowired
 	ServletContext ctx;
+	
+	@Autowired
+	private MessageBoardAPService pMBDao;
 
 	@RequestMapping(path = "/14/shopListController.ctrl", method = RequestMethod.GET)
 	public String creatShopList(Model m, @RequestParam(name = "pageNo", required = false) Integer pageNo,
@@ -149,8 +151,15 @@ public class ControllerAPShop {
 			@RequestParam(name = "productID") String productID) {
 		
 		ARTProduct ap = pDaoservice.select(productID);
+		
+		Long count = pMBDao.countMessageNum(Integer.parseInt(productID));
+		
+		List<MessageBoardAP> list = pMBDao.selectPdBoardAPs(Integer.parseInt(productID));
+		
 		m.addAttribute("oneProsuct", ap);
 		m.addAttribute("query", query);
+		m.addAttribute("mseeageList", list);
+		m.addAttribute("mseeageCount", count);
 		
 		return IdentityFilter.loginID+"14/14_showOnePdF";
 	}
@@ -218,15 +227,6 @@ public class ControllerAPShop {
 	
 	
 
-	@RequestMapping(path = "/14/test.ctrl")
-	public String test(HttpSession session) {
-
-		
-			return IdentityFilter.loginID+"14/Table";
-
-		
-
-	}
 	
 	
 	@RequestMapping(path = "/14/getBlobImage/{pdid}.ctrl")
@@ -330,6 +330,12 @@ public class ControllerAPShop {
 		
 	}
 	
+	@RequestMapping(path = "/14/test.ctrl")
+	public String test(HttpSession session) {
+		
+			return IdentityFilter.loginID+"14/Table";
+
+	}
 	
 
 }

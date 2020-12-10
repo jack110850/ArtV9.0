@@ -30,7 +30,8 @@ public class OrderListController {
 			return "redirect:/35/loginEntry";
 		}
 		
-		String memberID = Integer.toString(mb.getId());
+//		String memberID = Integer.toString(mb.getId());
+		String memberID = mb.getName();
 //		String memberID= "測試用";
 		System.out.println(".....:"+memberID);
 		List<OrderListBeamAP> customerOrder = serv.getCustomerOrder(memberID);

@@ -18,8 +18,8 @@ public class CreateTableSA {
 
 	public static final String UTF8_BOM = "\uFEFF"; // 定義 UTF-8的BOM字元
 	
-//	public void execute11() {
-	public static void main(String[] args) {
+	public void execute11b() {
+//	public static void main(String[] args) {
 		String line = "";
 
 		try (Connection con = DriverManager.getConnection(DBService_for_Oracle.getDbUrl(),
@@ -43,7 +43,7 @@ public class CreateTableSA {
 					BufferedReader br = new BufferedReader(isr);) {
 				int i = 0;
 				while ((line = br.readLine()) != null) {
-					System.out.println("line=" + line);
+//					System.out.println("line=" + line);
 					// 去除 UTF8_BOM: \uFEFF
 					if (line.startsWith(UTF8_BOM)) {
 						line = line.substring(1);
@@ -58,7 +58,7 @@ public class CreateTableSA {
 						bSA.setClassification_SA(token[4].trim());
 						
 						int n = saveSA(bSA, con);
-						System.out.println("新增一筆StreetArtist紀錄是否成功=" + n);
+//						System.out.println("新增一筆StreetArtist紀錄是否成功=" + n);
 					}
 					i++;
 				} 
@@ -84,8 +84,8 @@ public class CreateTableSA {
 			pStmt.setString(3, bean.getTheme_SA());
 			pStmt.setString(4, bean.getClassification_SA());
 			n = pStmt.executeUpdate();
-			System.out.println(bean.getTheme_SA());
-			System.out.println(bean.getClassification_SA());
+//			System.out.println(bean.getTheme_SA());
+//			System.out.println(bean.getClassification_SA());
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}

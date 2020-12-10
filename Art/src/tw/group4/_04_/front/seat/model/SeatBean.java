@@ -17,10 +17,12 @@ import org.springframework.stereotype.Component;
 public class SeatBean implements Serializable {
 
 	@Id // 設定primary key
-	@GeneratedValue(strategy = GenerationType.IDENTITY) // primary key的產生方式 有auto、IDENTITY
+//	@GeneratedValue(strategy = GenerationType.IDENTITY) // primary key的產生方式 有auto、IDENTITY
 	@Column(name = "ACT_NO")
-	private Integer aCT_NO;
+	private Integer ACT_NO;
+	private String ACT_TITLE;
 
+	
 	private Integer A1;
 	private Integer A2;
 	private Integer A3;
@@ -73,10 +75,16 @@ public class SeatBean implements Serializable {
 	private Integer E10;
 	
 	public Integer getaCT_NO() {
-		return aCT_NO;
+		return ACT_NO;
 	}
 	public void setaCT_NO(Integer aCT_NO) {
-		this.aCT_NO = aCT_NO;
+		this.ACT_NO = aCT_NO;
+	}
+	public String getACT_TITLE() {
+		return ACT_TITLE;
+	}
+	public void setACT_TITLE(String aCT_TITLE) {
+		ACT_TITLE = aCT_TITLE;
 	}
 	public Integer getA1() {
 		return A1;

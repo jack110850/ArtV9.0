@@ -37,6 +37,13 @@ public class PositionService implements InterfacePositionService{
 		}
 		
 		@Override
+		public Map<String, Double> getUserCoords(String userLocation){
+			Map<String, Double> coords;
+			coords = OpenStreetMapUtils.getInstance().getCoordinates(userLocation);
+			return coords;
+		}
+		
+		@Override
 		public Double getDistance(Double lat1, Double lon1, Double lat2, Double lon2) {
 			GeodesicLine line = geod.InverseLine(lat1, lon1, lat2, lon2, GeodesicMask.DISTANCE_IN | GeodesicMask.LATITUDE | GeodesicMask.LONGITUDE);
 			Double d = line.Distance()/1000; //最後除一千是為了把公尺單位轉換成公里
@@ -46,25 +53,25 @@ public class PositionService implements InterfacePositionService{
 		@Override
 		public List<Position> setDistance (String userLocation) {	
 			List<Position> listPt = getPositionBean();
-			Map<String, Double> coords;
-			List<Activity> listAct = selectDistinctToAct();
+//			List<Activity> listAct = selectDistinctToAct();
 			
 //			BasicConfigurator.configure();
 //			OpenStreetMapUtils.log.info("This is Logger Info");
 //			上面兩行初始化log4j設定，這個東西拿來記錄get到的地理資訊，沒初始化會出現以下錯誤
 			//WARN No appenders could be found for logger
-			coords = OpenStreetMapUtils.getInstance().getCoordinates(userLocation);
+			Map<String, Double> coords = getUserCoords(userLocation);
 			Double userLat = coords.get("lat");
 	        Double userLon = coords.get("lon");
 			
 			Double distance = 0.0;
 			for (Position itemPt : listPt) {
-				for (Activity itemAct: listAct) {
-					if (itemPt.getNo().equals(itemAct.getId())) {
-						itemPt.setTitle(itemAct.getTitle());
-						itemPt.setTime(itemAct.getTime());
-					}
-				}
+//				for (Activity itemAct: listAct) {
+//					if (itemPt.getNo().equals(itemAct.getId())) {
+//						itemPt.setUqid(itemAct.getUqid());
+//						itemPt.setTitle(itemAct.getTitle());
+//						itemPt.setTime(itemAct.getTime());
+//					}
+//				}
 				if (itemPt.getLatitude().equals(0.0)) {
 					itemPt.setDistance(0.0);
 				}else {
@@ -72,16 +79,56 @@ public class PositionService implements InterfacePositionService{
 					itemPt.setDistance(distance);
 				}
 			}
-			Collections.sort(listPt);
-			//在bean中覆寫了Comparable介面的排序方法
-			//設定依照物件中的距離屬性排序
+
 			return listPt;
 		}
 		
 		@Override
-		public List<Activity> selectDistinctToAct() {	 
-			return dao.selectDistinctToAct();
+		public List<Position> selectNearActs(String userLocation){
+			List<Position> list= setDistance(userLocation);
+			List<Position> cleanList = new ArrayList<Position>();
+			for (Position item: list) {
+				if (item.getDistance().equals(0.0)) {
+					
+				}else {
+					cleanList.add(item);
+				}
+			}
+			//在bean中覆寫了Comparable介面的排序方法
+			//設定依照物件中的距離屬性排序
+			Collections.sort(cleanList);
+			
+			return cleanList;
 		}
+		
+		@Override
+		public List<Position> selectNearActsByDistance(String userLocation, String userDistance){
+			List<Position> list= setDistance(userLocation);
+			List<Position> listByDistance = new ArrayList<Position>();
+			Double d = Double.valueOf(userDistance);
+			
+			for (Position item: list) {
+				int result = Double.compare(item.getDistance(), d);
+				if (!item.getDistance().equals(0.0) && result < 0) {
+					listByDistance.add(item);
+				}
+			}
+			if (listByDistance.size()==0) {
+				listByDistance.add(new Position());
+			}
+			
+			//作為地圖呈現不用排序
+			//在bean中覆寫了Comparable介面的排序方法
+			//設定依照物件中的距離屬性排序
+			//Collections.sort(cleanList);
+			
+			return listByDistance;
+		}
+		
+//		@Override
+//		public List<Activity> selectDistinctToAct() {	 
+//			return dao.selectDistinctToAct();
+//		}
 		
 		@Override
 		public List<Position> recommendList() {	
@@ -107,6 +154,13 @@ public class PositionService implements InterfacePositionService{
 						pt.setDistrict(item.getDistrict());
 						pt.setVillage(item.getVillage());
 						pt.setAddress(item.getAddress());
+						pt.setTitle(item.getTitle());
+						pt.setCategory(item.getCategory());
+						pt.setLocationName(item.getLocationName());
+						pt.setPrice(item.getPrice());
+						pt.setTime(item.getTime());
+						pt.setMainUnit(item.getMainUnit());
+						pt.setShowUnit(item.getShowUnit());
 						recommendList.add(pt);
 						break;
 					}else {
@@ -114,15 +168,15 @@ public class PositionService implements InterfacePositionService{
 					}
 				}
 			}
-			List<Activity> listAct = selectDistinctToAct();
-			for (Activity itemAct: listAct) {
-				for (Position itemPt: recommendList) {
-					if (itemPt.getNo().equals(itemAct.getId())) {
-						itemPt.setTitle(itemAct.getTitle());
-						itemPt.setTime(itemAct.getTime());
-					}	
-				}
-			}
+//			List<Activity> listAct = selectDistinctToAct();
+//			for (Activity itemAct: listAct) {
+//				for (Position itemPt: recommendList) {
+//					if (itemPt.getNo().equals(itemAct.getId())) {
+//						itemPt.setTitle(itemAct.getTitle());
+//						itemPt.setTime(itemAct.getTime());
+//					}	
+//				}
+//			}
 			return recommendList;
 		}
 		

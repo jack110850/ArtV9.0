@@ -10,15 +10,24 @@
 		padding: 5px;
 	}
 	body {
-		background-color: rgb(204,204,137);
+/* 		background-color: rgb(204,204,137); */
 	}
 	
 </style>
-<script>
-	$(document).ready(function() {
-		console.log("hi");
-		$('#table11').DataTable();
-	});
+ <script>
+$(document).ready( function () {
+    $('#events').section({
+    	language: {
+    		zeroRecords: "没有符合的结果",
+    		paginate: {
+                first: "首頁",
+                previous: "上一頁",
+                next: "下一頁",
+                last: "末頁"
+            }
+    	}
+    } );
+} );
 </script>
 </head>
 
@@ -46,59 +55,79 @@
 	</span>
 </form>
 </div>
-
+<!-- 研究jsp foreach 迴圈控制 -->
  <section class="upcoming-event-area section-gap" id="events">
  	<div class="container">
  		<div class="row">
  		<c:forEach var="userView" varStatus="stat" items="${BeanList_SA}">
- 			<div class="single-events">
-				<img class="img-fluid" src="data:image/jpg;base64, ${userView.pic2_SA}" alt="" width=250px height=250px;>
-				<a href="#"><h4>Street Artist</h4></a>
-				<h6><span>姓名：</span> ${userView.name_SA }</h6>
-				<p>
-					Somebody show their skill to other perple in the street.
-				</p>
-				<a href='<c:url value="/ToWeb.ctrl"/>' class="primary-btn text-uppercase">View Details</a>
-				<h6> </h6>
-			</div>
+ 			<c:choose>
+ 				<c:when test="${userView.id_SA %2!=0}">
+		 			<div class="col-lg-6 event-left" style="border-bottom: rgb(100,100,100) 1px solid; margin: auto; padding: 10px">
+			 			<div class="single-events">
+							<img class="img-fluid" src="data:image/jpg;base64, ${userView.pic2_SA}" alt="" width=450px height=450px;>
+							<a href="#"><h4>Street Artist</h4></a>
+							<h6><span>姓名：</span> ${userView.name_SA }</h6>
+							<p>
+								Somebody show their skill to other people in the street.
+							</p>
+							<a href='<c:url value="/ToWeb.ctrl?id_SA=${userView.id_SA}"/>' class="primary-btn text-uppercase">View Details</a>
+						</div>
+					</div>
+ 				</c:when>
+ 				<c:otherwise>
+					<div class="col-lg-6 event-right" style="border-bottom: rgb(100,100,100) 1px solid; margin: 0px; padding: 10px">
+						<div class="single-events">
+							<a href="#"><h4>Street Artist</h4></a>
+							<h6><span>姓名：</span> ${userView.name_SA }</h6>
+							<p>
+								Somebody show their skill to other people in the street.
+							</p>
+							<a href='<c:url value="/ToWeb.ctrl?id_SA=${userView.id_SA}"/>' class="primary-btn text-uppercase">View Details</a>
+							<img class="img-fluid" src="data:image/jpg;base64, ${userView.pic2_SA}" alt="" width=450px height=450px;>
+						</div>
+					</div>
+ 				</c:otherwise>
+ 			</c:choose>
 		</c:forEach>
+		
+		<nav aria-label="Page navigation example" style="margin: auto;">
+			<ul style="margin: auto;" class="pagination">
+				<li style="margin: auto;" class="page-item">
+					<c:if test="${PageMum_SA>1 }">
+						<a class="page-link" href='<c:url value="/userStreetArtistPage.ctrl?page=${PageMum_SA-1 }&query=${query }"/>'>
+							<span aria-hidden="true">
+								&laquo;
+							</span>
+						</a>
+					</c:if>
+					<c:forEach var="page" items="${allPages}">
+						<li class="page-item">
+							<a class="page-link" href='<c:url value="/userStreetArtistPage.ctrl?page=${page}&query=${query}" />' >
+								${page}
+							</a>
+						</li>
+					</c:forEach>
+					<c:if test="${PageMum_SA != totalPages_SA}">
+						<li class="page-item">
+							<a class="page-link" href="<c:url value="/userStreetArtistPage.ctrl?page=${PageMum_SA+1 }&query=${query }"/>">
+								<span aria-hidden="true">
+									&raquo;
+								</span>
+							</a>
+						</li>
+					</c:if>
+				</li>
+			</ul>
+		</nav>
  		</div>
  	</div>
- </section>
-<!-- 
-<table id="table11" class="display">
-	<thead>
-		<tr>
-			<th style="text-align: center;">藝名</th>
-			<th style="text-align: center;">來自</th>
-			<th style="text-align: center;">表演項目</th>
-			<th style="text-align: center;">分類</th>
-			<th style="text-align: center;">圖片</th>
-			<th style="text-align: center;">動作</th>
-		</tr>
-	</thead>
-	<tbody>
-		<c:forEach var="userView" varStatus="stat" items="${BeanList_SA}">
-		<tr>
-			<td style="text-align: center;">${userView.name_SA } </td>
-			<td style="text-align: center;">${userView.country_SA }</td>
-			<td style="text-align: center;">${userView.theme_SA }</td>
-			<td style="text-align: center;">${userView.classification_SA }</td>
-			<td style="text-align: center;">
-				<img style="display: block; width: 50px;height: 50px;" src="data:image/jpg;base64, ${userView.pic2_SA}">
-			</td>
-			<td style="text-align: center;">
-				<form action="ToWeb.ctrl">
-					<input type="hidden" value="${userView.id_SA}"  name="id_SA"/>
-					<input type="submit" name="submit" value="了解更多" id="aaa"/>
-				</form>
-				<form action="ToDonate.ctrl">
-					<input type="hidden" value="${userView.id_SA}"  name="id_SA"/>
-					<input type="submit" name="submit" value="支持他" id="bbb"/>
-				</form>
-			</td>
-		</tr>
-		</c:forEach>
-	</tbody>
-</table>
- -->
+</section>
+
+<script>
+$(function(){
+    $("#queryType").change(function() {
+        var query = $("#queryType").val();
+    	window.location.href="<c:url value='/userStreetArtistPage.ctrl?query="+query+"'/>" ;   
+    })
+})
+</script>

@@ -30,7 +30,7 @@
 <div class="welcome">
 <h1>session逾期所以你才來到這</h1>
 <h2>猜您想知道為什麼會逾期</h2>
-<h2>去把logout方法內的註解解開就行了</h2>
+<h2>因為session裡面沒有${sessionTimeoutToken}屬性</h2>
 </div>
 </body>
 </html>

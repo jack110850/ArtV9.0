@@ -6,7 +6,7 @@ import java.sql.Statement;
 
 public class TableForDB {
 	
-	//創MainTable表格
+	//創Activity表格
 	public void createTableActivity() {
 		
 		try (Connection connection = DataSourceConn.getDataSource().getConnection();) {
@@ -25,7 +25,7 @@ public class TableForDB {
 		}
 	}
 	
-	//刪MainTable表格
+	//刪Activity表格
 	public void dropTableActivity() {
 		
 		try (Connection connection = DataSourceConn.getDataSource().getConnection();) {
@@ -47,7 +47,11 @@ public class TableForDB {
 		try (Connection connection = DataSourceConn.getDataSource().getConnection();) {
 			Statement stmt = connection.createStatement();
 			
-		    String sql = "CREATE TABLE POSITION (NO Number(8,2), UQID VARCHAR(1000), CITY VARCHAR(1000), DISTRICT VARCHAR(1000),  VILLAGE VARCHAR2(1000), ADDRESS VARCHAR2(1000),  LATITUDE NUMBER(25, 20), LONGITUDE NUMBER(25, 20), PRIMARY KEY(NO))";
+		    String sql = "CREATE TABLE POSITION (NO Number(8,2), UQID VARCHAR(1000), CITY VARCHAR(1000), DISTRICT VARCHAR(1000),  VILLAGE VARCHAR2(1000), ADDRESS VARCHAR2(1000),  LATITUDE NUMBER(25, 20), LONGITUDE NUMBER(25, 20), "
+		    		+ "title VARCHAR2(1000), category NUMBER(8,2),"
+		    		+ "locationName VARCHAR2(1000), price VARCHAR2(4000),"
+		    		+ "time VARCHAR2(1000), mainUnit VARCHAR2(1000), showUnit VARCHAR2(1000),"
+		    		+ "PRIMARY KEY(NO))";
 	    
 		    stmt.executeUpdate(sql);
 		    System.out.println("POSITION表格已建立");
@@ -82,6 +86,7 @@ public class TableForDB {
 		    String sql = "CREATE TABLE WebsiteMember (id NUMBER generated always as identity(start with 1 increment by 1 nocache) primary key not null, "
 					   + " name    			varchar2(32), "
 					   + " password			varchar2(32), " 
+					   + " realName			varchar2(32), " 
 					   + " address 			varchar2(64), "
 					   + " email 			varchar2(64), " 
 					   + " tel  			varchar2(32), "
@@ -240,51 +245,6 @@ public class TableForDB {
 		    stmt.executeUpdate(sql);
 		    System.out.println("EventSpace表格已刪除");
 
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	//創Sponsorship表格
-	public void createTableSponsorship() {
-		
-		try (Connection connection = DataSourceConn.getDataSource().getConnection();) {
-			Statement stmt = connection.createStatement();
-			
-		    String sql = "CREATE TABLE Sponsorship"
-					   + "(id NUMBER generated always as identity(start with 1 increment by 1 nocache) primary key not null, "
-					+ " schoolName NVARCHAR2(50), "
-					+ " city NVARCHAR2(50), "
-					+ " district NVARCHAR2(50), "
-					+ " address NVARCHAR2(50), " 
-					+ " schoolType NVARCHAR2(50), " 
-					+ " childAmount NUMBER, "
-					+ " activityTime DATE, "
-					+ " activityType NVARCHAR2(50), "
-					+ " fee NUMBER, "
-					+ " announcementDate DATE, "
-					+ " contactInfo NVARCHAR2(50) "
-					+ " )";
-			
-			stmt.executeUpdate(sql);
-			System.out.println("Sponsorship表格已建立");
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	//刪ChildSponsorship表格
-	public void dropTableSponsorship() {
-		
-		try (Connection connection = DataSourceConn.getDataSource().getConnection();) {
-			Statement stmt = connection.createStatement();
-			
-			String sql = "DROP TABLE Sponsorship CASCADE CONSTRAINTS";
-			
-			stmt.executeUpdate(sql);
-			System.out.println("Sponsorship表格已刪除");
-			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

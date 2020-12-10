@@ -1,12 +1,17 @@
 package tw.group4._04_.init;
 
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.net.URL;
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,7 +20,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.imageio.ImageIO;
 import javax.sql.DataSource;
+import javax.sql.rowset.serial.SerialBlob;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 
@@ -78,32 +85,49 @@ private DataSource dataSource;
 	}
 	
 
-	//創Orderlist表格
+	//創TicketOrderlist表格
 	public void createTableOL() {
 		
 		try (Connection connection = getDataSource().getConnection();) {
 			Statement stmt = connection.createStatement();
 			
-		    String sql = "CREATE TABLE ORDERLIST (ORDERID VARCHAR2(1000 BYTE), NAME VARCHAR2(1000 BYTE), EMAIL VARCHAR2(1000 BYTE), TEL VARCHAR2(1000 BYTE), ADDRESS VARCHAR2(1000 BYTE), TOTALPRICE NUMBER)";
+//		    String sql = "CREATE TABLE ACTORDERLIST (ORDERID VARCHAR2(1000 BYTE), NAME VARCHAR2(1000 BYTE), EMAIL VARCHAR2(1000 BYTE), TEL VARCHAR2(1000 BYTE), ADDRESS VARCHAR2(1000 BYTE), TOTALPRICE NUMBER)";
+		    String sql = "CREATE TABLE TICKETORDERLIST ("
+		    		+ "ORDERPK  integer GENERATED as IDENTITY ,"
+		    		+ "MEMBERID VARCHAR2(1000 BYTE),"
+		    		+ "ORDERID VARCHAR2(1000 BYTE),"
+		    		+ "NAME VARCHAR2(1000 BYTE),"
+		    		+ "EMAIL VARCHAR2(1000 BYTE),"
+		    		+ "TEL VARCHAR2(1000 BYTE) ,"
+		    		+ "ADDRESS VARCHAR2(1000 BYTE),"
+		    		+ "ACT_ID NUMBER,"
+		    		+ "TITLE VARCHAR2(1000 BYTE),"
+		    		+ "TICKETCATEGORY VARCHAR2(1000 BYTE),"
+		    		+ "TICKET_NUM NUMBER,"
+		    		+ "TOTALPRICE NUMBER,"
+		    		+ "seats VARCHAR2(1000 BYTE))";
 	    
+//		    MEMBERID VARCHAR2(1000 BYTE),ORDERID VARCHAR2(1000 BYTE),NAME VARCHAR2(1000 BYTE),EMAIL VARCHAR2(1000 BYTE),TEL,ADDRESS VARCHAR2(1000 BYTE),ACT_ID NUMBER,TITLE VARCHAR2(1000 BYTE),TICKETCATEGORY VARCHAR2(1000 BYTE),TICKET_NUM NUMBER,TOTALPRICE NUMBER,seats VARCHAR2(1000 BYTE)
+		    
+
 		    stmt.executeUpdate(sql);
-		    System.out.println("Orderlist表格已建立");
+		    System.out.println("TicketOrderlist表格已建立");
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 	
-	//刪Orderlist表格
+	//刪ActOrderlist表格
 	public void dropTableOL() {
 		
 		try (Connection connection = getDataSource().getConnection();) {
 			Statement stmt = connection.createStatement();
 			
-		    String sql = "DROP TABLE ORDERLIST CASCADE CONSTRAINTS";
+		    String sql = "DROP TABLE TICKETORDERLIST CASCADE CONSTRAINTS";
 	    
 		    stmt.executeUpdate(sql);
-		    System.out.println("ORDERLIST表格已刪除");
+		    System.out.println("TicketOrderlist表格已刪除");
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -385,6 +409,126 @@ private DataSource dataSource;
 			System.out.println("MainTable物件已寫入資料庫");
 			
 		}
+		
+		
+		//插入圖片測試
+
+		public void InsertBLOB() {
+			
+//			Blob blob1 = null;
+//			Blob blob2 = null;
+			PreparedStatement pstmt = null;
+			  try (Connection connection = getDataSource().getConnection();){
+
+				  	File file = new File("./IOFiles/inputJPG/activityImage/class_music.jpg"); 	  
+				  	File file2 = new File("./IOFiles/inputJPG/activityImage/drama.jpg"); 	  
+				  	File file3 = new File("./IOFiles/inputJPG/activityImage/dance.jpg"); 	  
+				  	File file4 = new File("./IOFiles/inputJPG/activityImage/family.jpg"); 	  
+				  	File file5 = new File("./IOFiles/inputJPG/activityImage/indie_music.jpg"); 	  
+				  	File file6 = new File("./IOFiles/inputJPG/activityImage/exhibition.jpg"); 	  
+				  	File file7 = new File("./IOFiles/inputJPG/activityImage/lecture.jpg"); 	  
+				  	File file8 = new File("./IOFiles/inputJPG/activityImage/movie.jpg"); 	  
+				  	File file9 = new File("./IOFiles/inputJPG/activityImage/street_artist.jpg"); 	  
+				  	File file10 = new File("./IOFiles/inputJPG/activityImage/competition.jpg"); 	  
+				  	File file11 = new File("./IOFiles/inputJPG/activityImage/solicit.jpg"); 	  
+				  	File file12 = new File("./IOFiles/inputJPG/activityImage/other.jpg"); 	  
+				  	File file13 = new File("./IOFiles/inputJPG/activityImage/music_concert.jpg"); 	  
+				  	File file14 = new File("./IOFiles/inputJPG/activityImage/class.jpg"); 	  
+					int length = (int) file.length();   					
+					InputStream fin = new FileInputStream(file); 
+					InputStream fin2 = new FileInputStream(file2); 
+					InputStream fin3 = new FileInputStream(file3); 
+					InputStream fin4 = new FileInputStream(file4);
+					InputStream fin5 = new FileInputStream(file5);
+					InputStream fin6 = new FileInputStream(file6);
+					InputStream fin7 = new FileInputStream(file7);
+					InputStream fin8 = new FileInputStream(file8);
+					InputStream fin9 = new FileInputStream(file9);
+					InputStream fin10 = new FileInputStream(file10);
+					InputStream fin11= new FileInputStream(file11);
+					InputStream fin12 = new FileInputStream(file12);
+					InputStream fin13 = new FileInputStream(file13);
+					InputStream fin14 = new FileInputStream(file14);
+					
+  
+	                // 填入資料庫 
+	                pstmt = connection.prepareStatement( 
+//	                           "INSERT INTO MAINTABLE (ACT_NO,ACT_PHOTO) VALUES (?,?) "	                		
+	                		"UPDATE MAINTABLE SET ACT_PHOTO=? WHERE ACT_CATEGORY=?"	                		
+	                		); 
+	                pstmt.setBinaryStream (1,fin); 
+	                pstmt.setInt(2,1); 
+	             // Add it to the batch
+	                pstmt.addBatch();
+	                
+	                pstmt.setBinaryStream (1,fin2); 
+	                pstmt.setInt(2,2); 
+	                pstmt.addBatch();
+	                
+	                pstmt.setBinaryStream (1,fin3); 
+	                pstmt.setInt(2,3); 
+	                pstmt.addBatch();
+	                
+	                pstmt.setBinaryStream (1,fin4); 
+	                pstmt.setInt(2,4); 
+	                pstmt.addBatch();
+	                
+	                pstmt.setBinaryStream (1,fin5); 
+	                pstmt.setInt(2,5); 
+	                pstmt.addBatch();
+	                
+	                pstmt.setBinaryStream (1,fin6); 
+	                pstmt.setInt(2,6); 
+	                pstmt.addBatch();
+	                
+	                pstmt.setBinaryStream (1,fin7); 
+	                pstmt.setInt(2,7); 
+	                pstmt.addBatch();
+	                
+	                pstmt.setBinaryStream (1,fin8); 
+	                pstmt.setInt(2,8); 
+	                pstmt.addBatch();
+	                
+	                pstmt.setBinaryStream (1,fin9); 
+	                pstmt.setInt(2,11); 
+	                pstmt.addBatch();
+	                
+	                pstmt.setBinaryStream (1,fin10); 
+	                pstmt.setInt(2,13); 
+	                pstmt.addBatch();
+	                
+	                pstmt.setBinaryStream (1,fin11); 
+	                pstmt.setInt(2,14); 
+	                pstmt.addBatch();
+	                
+	                pstmt.setBinaryStream (1,fin12); 
+	                pstmt.setInt(2,15); 
+	                pstmt.addBatch();
+	                
+	                pstmt.setBinaryStream (1,fin13); 
+	                pstmt.setInt(2,17); 
+	                pstmt.addBatch();
+	                
+	                pstmt.setBinaryStream (1,fin14); 
+	                pstmt.setInt(2,19); 
+	                pstmt.addBatch();
+	                
+	               
+	                pstmt.executeBatch();  
+//	                pstmt.executeUpdate(); 
+//	                pstmt.clearParameters(); 
+
+	                fin.close(); 
+			   System.out.println("圖片已插入");
+
+			  } catch (Exception e) {
+			   e.printStackTrace();
+			  }
+	
+
+			  
+		}
+		
 		
 	
 }

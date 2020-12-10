@@ -11,6 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
+import tw.group4._04_.back.cmsAct.model.ShowBean2;
+import tw.group4._04_.front.shopcart.model.Shoppingcart;
+
 
 @Repository("SeatBeanDAO")
 public class SeatBeanDAO {
@@ -18,6 +21,10 @@ public class SeatBeanDAO {
 	private SessionFactory sessionFacory;
 	private Session session;
 
+	@Autowired
+	private Shoppingcart shoppingcart;
+	@Autowired
+	private SeatBean seatBean;
 
 //	public SeatBeanDAO() {
 //	
@@ -33,26 +40,143 @@ public class SeatBeanDAO {
 	// 新增
 	public SeatBean insert(SeatBean SeatBean) {
 		Session session = sessionFacory.getCurrentSession();
-//		SeatBean resultBean = session.get(SeatBean.class, SeatBean.getACT_NO());
-//		if (resultBean == null) {
+
 			session.save(SeatBean);
 			return SeatBean;
-//		}
-//		return null;
+	}
+	
+	public  boolean   insert4Seat(String[] seats,String actno) {
+		String Seat1 = seats[0];
+		String Seat2 = seats[1];
+		String Seat3 = seats[2];
+		String Seat4 = seats[3];
+		Session session = sessionFacory.getCurrentSession();
+		Query query = session.createQuery("update SeatBean st set "
+				+Seat1+"=1 ," 
+				+Seat2+"=1 ," 
+				+Seat3+"=1 ," 
+				+Seat4+"=1 " 
+				+ "where st.ACT_NO="+actno);
+		query.executeUpdate();
+			
+	return true;
+	
 	}
 
-//	// 查詢
-//	public SeatBean select(int actno) {
-//		Session session = sessionFacory.getCurrentSession();
-//		return session.get(SeatBean.class, actno);
-//	}
+	public boolean insert3Seat(String[] seats,String actno) {
+		String Seat1 = seats[0];
+		String Seat2 = seats[1];
+		String Seat3 = seats[2];
+		Session session = sessionFacory.getCurrentSession();
+		Query query = session.createQuery("update SeatBean st set "
+				+Seat1+"=1 ," 
+				+Seat2+"=1 ," 
+				+Seat3+"=1 " 
+				+ "where st.ACT_NO="+actno);
+		query.executeUpdate();
+			
+	return true;
+	}
+
+	public boolean insert2Seat(String[] seats,String actno) {
+		String Seat1 = seats[0];
+		String Seat2 = seats[1];
+		Session session = sessionFacory.getCurrentSession();
+		Query query = session.createQuery("update SeatBean st set "
+				+Seat1+"=1 ," 
+				+Seat2+"=1 " 
+				+ "where st.ACT_NO="+actno);
+		query.executeUpdate();
+			
+	return true;
+	}
+
+	public boolean insert1Seat(String[] seats,String actno) {
+		String Seat1 = seats[0];
+		Session session = sessionFacory.getCurrentSession();
+		Query query = session.createQuery("update SeatBean st set "
+				+Seat1+"=1 " 
+				+ "where st.ACT_NO="+actno);
+		query.executeUpdate();
+			
+	return true;
+	}
 	
+	public  boolean   delete4Seat(String[] seats,String actno) {
+		String Seat1 = seats[0];
+		String Seat2 = seats[1];
+		String Seat3 = seats[2];
+		String Seat4 = seats[3];
+		Session session = sessionFacory.getCurrentSession();
+		Query query = session.createQuery("update SeatBean st set "
+				+Seat1+"='' ," 
+				+Seat2+"='' ," 
+				+Seat3+"='' ," 
+				+Seat4+"='' " 
+				+ "where st.ACT_NO="+actno);
+		query.executeUpdate();
+			
+	return true;
+	
+	}
+
+	public boolean delete3Seat(String[] seats,String actno) {
+		String Seat1 = seats[0];
+		String Seat2 = seats[1];
+		String Seat3 = seats[2];
+		Session session = sessionFacory.getCurrentSession();
+		Query query = session.createQuery("update SeatBean st set "
+				+Seat1+"='' ," 
+				+Seat2+"='' ," 
+				+Seat3+"='' " 
+				+ "where st.ACT_NO="+actno);
+		query.executeUpdate();
+			
+	return true;
+	}
+
+	public boolean delete2Seat(String[] seats,String actno) {
+		String Seat1 = seats[0];
+		String Seat2 = seats[1];
+		Session session = sessionFacory.getCurrentSession();
+		Query query = session.createQuery("update SeatBean st set "
+				+Seat1+"='' ," 
+				+Seat2+"='' " 
+				+ "where st.ACT_NO="+actno);
+		query.executeUpdate();
+			
+	return true;
+	}
+
+	public boolean delete1Seat(String[] seats,String actno) {
+		String Seat1 = seats[0];
+		Session session = sessionFacory.getCurrentSession();
+		Query query = session.createQuery("update SeatBean st set "
+				+Seat1+"='' " 
+				+ "where st.ACT_NO="+actno);
+		query.executeUpdate();
+			
+	return true;
+	}
+	
+	
+//	// 新增
+//	public SeatBean insertSeat (SeatBean SeatBean) {
+//		Session session = sessionFacory.getCurrentSession();
+//		Query query = session.createQuery("update SEAT set "+SEATA+"=1 where ACT_NO='1'");
+//		query.executeUpdate();
+//
+//		return SeatBean;
+//	}
 	
 	// 查詢  //先將查詢結果放入MAP
 		public Map<String, Integer> select(int actno) {
 			Session session = sessionFacory.getCurrentSession();
 			SeatBean seatBean =session.get(SeatBean.class, actno);
+			
+			
 			Map<String,Integer> SeatMap = new HashMap<>();
+			SeatMap.put("actno",seatBean.getaCT_NO());
 			SeatMap.put("A1",seatBean.getA1());
 			SeatMap.put("A2",seatBean.getA2());
 			SeatMap.put("A3",seatBean.getA3());
@@ -106,28 +230,124 @@ public class SeatBeanDAO {
 
 			return SeatMap;
 		}
-
-
-	
-
+		
+		
+		
 	// 修改
-	public SeatBean update(int actno) {
+	public SeatBean update(
+			 Integer actno,
+			 Integer A1,
+			 Integer A2,
+			 Integer A3,
+			 Integer A4,
+			 Integer A5,
+			 Integer A6,
+			 Integer A7,
+			 Integer A8,
+			 Integer A9,
+			 Integer A10,
+			 Integer B1,
+			 Integer B2,
+			 Integer B3,
+			 Integer B4,
+			 Integer B5,
+			 Integer B6,
+			 Integer B7,
+			 Integer B8,
+			 Integer B9,
+			 Integer B10,
+			 Integer C1,
+			 Integer C2,
+			 Integer C3,
+			 Integer C4,
+			 Integer C5,
+			 Integer C6,
+			 Integer C7,
+			 Integer C8,
+			 Integer C9,
+			 Integer C10,
+			 Integer D1,
+			 Integer D2,
+			 Integer D3,
+			 Integer D4,
+			 Integer D5,
+			 Integer D6,
+			 Integer D7,
+			 Integer D8,
+			 Integer D9,
+			 Integer D10,
+			 Integer E1,
+			 Integer E2,
+			 Integer E3,
+			 Integer E4,
+			 Integer E5,
+			 Integer E6,
+			 Integer E7,
+			 Integer E8,
+			 Integer E9,
+			 Integer E10) {
 
 		Session session = sessionFacory.getCurrentSession();
-		SeatBean SeatBean = session.get(SeatBean.class, actno);
+		seatBean= session.get(SeatBean.class, actno);
+		seatBean.setA1(A1);
+		seatBean.setA2(A2);
+		seatBean.setA3(A3);
+		seatBean.setA4(A4);
+		seatBean.setA5(A5);
+		seatBean.setA6(A6);
+		seatBean.setA7(A7);
+		seatBean.setA8(A8);
+		seatBean.setA9(A9);
+		seatBean.setA10(A10);
+		
+		seatBean.setB1(B1);
+		seatBean.setB2(B2);
+		seatBean.setB3(B3);
+		seatBean.setB4(B4);
+		seatBean.setB5(B5);
+		seatBean.setB6(B6);
+		seatBean.setB7(B7);
+		seatBean.setB8(B8);
+		seatBean.setB9(B9);
+		seatBean.setB10(B10);
 
-		if (SeatBean != null) {
-//			SeatBean.setACT_TITLE(title);
-//			SeatBean.setACT_CATEGORY(category);
-//			SeatBean.setACT_LOCATION(locationName);
-//			SeatBean.setACT_MAINUNIT(mainunit);
-//			SeatBean.setACT_SHOWUNIT(showunit);
-//			SeatBean.setACT_DESCRIPTION(description);
-//			SeatBean.setACT_STARTDATE(startdate);
-//			SeatBean.setACT_ENDDATE(enddate);
-		}
+		seatBean.setC1(C1);
+		seatBean.setC2(C2);
+		seatBean.setC3(C3);
+		seatBean.setC4(C4);
+		seatBean.setC5(C5);
+		seatBean.setC6(C6);
+		seatBean.setC7(C7);
+		seatBean.setC8(C8);
+		seatBean.setC9(C9);
+		seatBean.setC10(C10);
 
-		return SeatBean;
+		seatBean.setD1(D1);
+		seatBean.setD2(D2);
+		seatBean.setD3(D3);
+		seatBean.setD4(D4);
+		seatBean.setD5(D5);
+		seatBean.setD6(D6);
+		seatBean.setD7(D7);
+		seatBean.setD8(D8);
+		seatBean.setD9(D9);
+		seatBean.setD10(D10);
+
+		seatBean.setE1(E1);
+		seatBean.setE2(E2);
+		seatBean.setE3(E3);
+		seatBean.setE4(E4);
+		seatBean.setE5(E5);
+		seatBean.setE6(E6);
+		seatBean.setE7(E7);
+		seatBean.setE8(E8);
+		seatBean.setE9(E9);
+		seatBean.setE10(E10);
+		
+		
+		session.update(seatBean);
+
+		return seatBean;
 	}
 
 	// 刪除
@@ -142,6 +362,15 @@ public class SeatBeanDAO {
 		}
 
 		return false;
+	}
+	//查詢單座位
+	public String search1seat(String seat, int actno) {
+
+		Session session = sessionFacory.getCurrentSession();
+		Query query = session.createQuery("select st.+"+seat+" from SEAT as st where st.ACT_NO="+actno);
+		String result=query.getQueryString();
+
+		return result;
 	}
 
 	

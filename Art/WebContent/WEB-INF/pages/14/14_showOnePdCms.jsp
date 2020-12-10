@@ -1,11 +1,43 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
-<h2>查詢 ${ap.productTitle}</h2>
-<h2>型態 ${ap.productType}</h2>
-<h2>價格 ${ap.productPrice}</h2>
-<H2>圖</H2>
-<img src="${pageContext.servletContext.contextPath}/14/getBlobImage/${ap.productId}.ctrl" class="card-img-top" alt="...">
-<h2 style="white-space:pre-wrap">細項 ${ap.productDes}</h2>
-<br>
+
+<div class="container">
+	<div class="card mb-3 "
+		style="max-width: 800px; margin: auto; margin-top: 10px;">
+		<div class="row no-gutters">
+			<div class="col-md-4">
+				<img
+					src="${pageContext.servletContext.contextPath}/14/getBlobImage/${ap.productId}.ctrl"
+					class="card-img" alt="...">
+			</div>
+			<div class="col-md-8">
+				<div class="card-body">
+					<FORM ACTION="SubmitProcess.ctrl">
+						<h4 class="card-title">${ap.productTitle}</h4>
+						<%--                             <p class="card-text">${oneProsuct.productId}</p> --%>
+
+						<p class="card-text">
+							<fmt:formatNumber value="${ap.productPrice}" type="number" />
+							元
+						</p>
+
+						<p class="card-text">
+							庫存數:
+							<fmt:formatNumber value="${ap.productNum}" type="number" />
+
+						</p>
+
+						<hr>
+						<p class="card-text" style="font-size: x-large">
+							<small class="text-muted">${ap.productDes}</small>
+						</p>
+
+					</form>
+				</div>
+			</div>
+
+		</div>

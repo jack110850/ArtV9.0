@@ -17,11 +17,29 @@ p{
 </head>
 <body style="background:#FFFFFF;">
 <c:set var="funcName" value="END" scope="session"/>
-
+<!-- start banner Area -->
+<section class="banner-area relative" id="home">
+	<div class="overlay overlay-bg"></div>
+	<div class="container">
+		<div class="row d-flex align-items-center justify-content-center">
+			<div class="about-content col-lg-12">
+				<h1 class="text-white">AAART Shop</h1>
+				<p class="text-white link-nav">
+					<a href="index.html">Home </a> <span class="lnr lnr-arrow-right"></span>
+					<a href="<c:url value='/14/shopListController.ctrl' />"> Shop</a> <span
+						class="lnr lnr-arrow-right"></span> <span>${oneProsuct.productTitle}</span>
+				</p>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- End banner Area -->
 <div>
-	<p>得藝的一天</p>
- 	<p>非常感謝您的訂購</p>
- 	<p>明天擱再來</p> 
+	<h3>親愛的  ${shopDetile.memberID }  會員您好</h3>
+
+ 	<h4>非常感謝您的訂購</h4>
+ 	<h4>我們已將商品確認信寄至 ${shopDetile.email} 信箱</h4>
+ 	<p>期待您明天再度光臨 <3</p> 
 </div>
 </body>
 </html>

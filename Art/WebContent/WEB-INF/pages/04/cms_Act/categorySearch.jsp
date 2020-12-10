@@ -17,7 +17,7 @@
 }
 
 .title {
-	width: 550px;
+	width: 500px;
 }
 
 .site {
@@ -29,11 +29,12 @@
 }
 
 .do {
-	width: 80px;
+ 	width: 100px; 
 }
 #search{
  width: 250px;
 }
+
 
 
 </style>
@@ -45,10 +46,7 @@
 		<br>
 		<h1>後臺管理系統:修改活動資訊</h1>
 
-<%-- 		<form method=GET action="<c:url value='/04/CMS/SearchAll.ctrl'/>"> --%>
-<!-- 			<input type=TEXT name="searchString"  class="form-control" placeholder=""id="search">  -->
-<!-- 			<input type=SUBMIT value="查詢" class="btn btn-info" id="searchbut"><br><br> -->
-<!-- 		</form>	 -->
+
 <form method=GET action="<c:url value='/04/CMS/SearchAll.ctrl'/>">
   <div class="form-row align-items-center">
     <div class="col-sm-3 my-1">
@@ -107,52 +105,56 @@
 					class="btn btn-info">研習課程</button>
 			</form>
 
-			<table class="display" id="myTable">
+			<table class="table table-bordered">
 			<thead>
 			</thead>
 			<tbody>
 				<tr>
+					<th class="do">座位</th>
 					<th class="no">編號</th>
 					<th class="title">節目名稱</th>
 					<th class="site">場地</th>
 					<!-- 			<th class="date">日期</th> -->
 					<th class="do">操作</th>
+					<th class="do"></th>
 				</tr>
 
 				<%--使用JSTL 執行for loop ${show.no}取map內value --%>
 				<c:forEach items="${currentPage}" var="show" varStatus="idx">
 					<tr>
-						<!-- 傳送節目資訊 -->
+						
+						<td>
+						<form name="order" action="<c:url value='/04/CMS/seatSearch.ctrl'/>" method="get">
+								<button name="actno" type="submit" value=${show.no} class="btn btn-outline-info" >座位</button>
+							<!-- 這些隱藏欄位都會送到後端 -->
+							<Input type='hidden' name='page' value='${page}'> <Input type='hidden' name='category' value='${category}'>
+						</form>
+						</td>
 						<td>${show.no}</td>
 						<td>${show.title}</td>
 						<td>${show.site}</td>
 
-							<td>
-<!-- 						<form name="order" action="/04/CMS/update1.ctrl" method="get"> -->
+						<td> 				
 						<form name="order" action="<c:url value='/04/CMS/Update1.ctrl'/>" method="get">
-								<button name="" type="submit" value="" class="btn btn-info">修改</button>
+								<button name="" type="submit" value="" class="btn btn-outline-info">修改</button>
 							<!-- 這些隱藏欄位都會送到後端 -->
 							<Input type='hidden' name='actno' value="${show.no}">
 							<Input type='hidden' name='page' value='${page}'>
 							<Input type='hidden' name='category' value='${category}'>
 						</form>
-							</td>
+						</td>
 
 						<td>
-<!-- 						<form name="order" action="/04/CMS/delete.ctrl" method="get"> -->
 						<form name="order" action="<c:url value='/04/CMS/Delete.ctrl'/>" method="get">
-								<button name="actno" type="submit" value=${show.no} class="btn btn-info" onclick="return del()">刪除</button>
+								<button name="actno" type="submit" value=${show.no} class="btn btn-outline-info" onclick="return del()">刪除</button>
 							<!-- 這些隱藏欄位都會送到後端 -->
 							<Input type='hidden' name='page' value='${page}'> <Input type='hidden' name='category' value='${category}'>
 						</form>
 						</td>
+					
 						
 						<td>
-<%-- 						<form name="order" action="<c:url value='/04/CMS/Delete.ctrl'/>" method="get"> --%>
-<!-- 								<button name="actno" type="submit" value=${show.no} class="btn btn-info" onclick="return del()">詳ㄒㄧ</button> -->
-<!-- 							這些隱藏欄位都會送到後端 -->
-<%-- 							<Input type='hidden' name='page' value='${page}'> <Input type='hidden' name='category' value='${category}'> --%>
-<!-- 						</form> -->
+
 						</td>
 						<Input type='hidden' name='page' value='${page}'>
 						<Input type='hidden' name='category' value='${category}'>

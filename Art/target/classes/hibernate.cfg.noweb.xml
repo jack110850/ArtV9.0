@@ -33,7 +33,6 @@
 		<mapping class="tw.group4._35_.geo.model.Activity" />
 		<mapping class="tw.group4._35_.geo.model.Position" />
 		<mapping class="tw.group4._35_.cms.model.EventSpace" />
-		<mapping class="tw.group4._35_.cms.model.Sponsership" />
 		<mapping class="tw.group4._35_.login.model.WebsiteMember" />
 
 	</session-factory>

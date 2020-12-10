@@ -29,6 +29,9 @@ public class OrderListBeamAP {
 		@Column(name = "MEMBERID")
 		private String memberID;
 		
+		@Column(name = "EMAIL")
+		private String email;
+		
 		@Column(name = "SHIPPINGADDRESS")
 		private String addAP;
 		
@@ -54,10 +57,11 @@ public class OrderListBeamAP {
 		
 		
 		
-		public OrderListBeamAP(String memberID, String addAP, String bnoAP, String orderTitleAP, int totalAmountAP,
+		public OrderListBeamAP(String memberID, String email,String addAP, String bnoAP, String orderTitleAP, int totalAmountAP,
 				Date date) {
 			super();
 			this.memberID = memberID;
+			this.email = email;
 			this.addAP = addAP;
 			this.bnoAP = bnoAP;
 			this.orderTitleAP = orderTitleAP;
@@ -88,6 +92,8 @@ public class OrderListBeamAP {
 			this.date = date;
 			this.items = items;
 		}
+		
+		
 		public Integer getOrderNoAP() {
 			return orderNoAP;
 		}
@@ -136,7 +142,18 @@ public class OrderListBeamAP {
 		public void setItems(Set<OrderItemBeanAP> items) {
 			this.items = items;
 		}
-		
+
+		public String getEmail() {
+			return email;
+		}
+
+		public void setEmail(String email) {
+			this.email = email;
+		}
+
+		public void setTotalAmountAP(Integer totalAmountAP) {
+			this.totalAmountAP = totalAmountAP;
+		}
 		
 
 }

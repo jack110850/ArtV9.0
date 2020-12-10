@@ -16,6 +16,9 @@ import org.springframework.stereotype.Repository;
 public class UserSADao {
 
 	private SessionFactory sessionFactory;
+	private int page = 0;
+	private int pageSize = 10;
+	private int totalPage = 1;
 	
 	@Autowired
 	public UserSADao(@Qualifier("sessionFactory") SessionFactory sessionFactory) {
@@ -24,11 +27,70 @@ public class UserSADao {
 
 	public List<UserSABean> selectAll(){
 		Session session = sessionFactory.getCurrentSession();
-		Query<UserSABean> query = session.createQuery("From UserSABean Order by ID_SA", UserSABean.class);
+		Query<UserSABean> query = session.createQuery("From UserSABean", UserSABean.class);
 		
 //		圖片檔需要轉檔 否則無法讀出
 		List<UserSABean> list = query.list();
 		return list;
+	}
+	
+	public List<UserSABean> selectPage(int page){
+		Session session = sessionFactory.getCurrentSession();
+		String count = "Select count (sa.id_SA) From UserSABean sa";
+		Query countQuery = session.createQuery(count);
+		Long countSaPage = (Long) countQuery.uniqueResult();
+		
+		Query<UserSABean> query = session.createQuery("From UserSABean sa Order by id_SA",UserSABean.class);
+		query.setFirstResult((page - 1) * pageSize);
+		query.setMaxResults(pageSize);
+		List<UserSABean> list = query.list();
+		
+		return list;
+	}
+	
+	public int selectCount() {
+		Session session = sessionFactory.getCurrentSession();
+		int count = 0;
+		String sql = "select count(*) From UserSABean";
+		Query<UserSABean> query = session.createQuery(sql);
+		
+		List<UserSABean> list = query.list();
+		
+		for (int i = 0; i < list.size(); i++) {
+			count++;
+		}
+		
+		return count;
+	}
+	
+	public int getTotlePage(){
+		
+		Session session = sessionFactory.getCurrentSession();
+		String count = "Select count (sa.id_SA) From UserSABean sa";
+		Query countQuery = session.createQuery(count);
+		Long countSaPage = (Long) countQuery.uniqueResult();
+		
+		if ((countSaPage % pageSize) != 0) {
+			totalPage = (int) (Math.floor(countSaPage/pageSize));
+		} else {
+			totalPage = (int) (Math.ceil(countSaPage/pageSize));
+		}
+		
+		return totalPage;
+	}
+	
+	public int getPages(String query) {
+		Session session = sessionFactory.getCurrentSession();
+		String count = "Select count (sa.id_SA) From UserSABean sa FROM UserSABean WHERE theme_SA like %"+query+"% Or classification_SA like %"+query+"% Order by ID_SA";
+		Query countQuery = session.createQuery(count);
+		Long countSaPage = (Long) countQuery.uniqueResult();
+		
+		if ((countSaPage % pageSize) != 0) {
+			totalPage = (int) (Math.floor(countSaPage/pageSize));
+		} else {
+			totalPage = (int) (Math.ceil(countSaPage/pageSize));
+		}
+		return totalPage;
 	}
 	
 	public byte[] picSaByteArray(UserSABean uBean) {

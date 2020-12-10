@@ -16,17 +16,13 @@ public class Founding {
 	@Autowired
 	FoundingService fdService;
 	
-	@RequestMapping(path = "/35/csr", method = RequestMethod.GET)
-	public String csr() {
-		return IdentityFilter.loginID+"35/csr/csr";
-	}
-	
 	@RequestMapping(path = "/35/founding.ctrl", method = RequestMethod.GET)
 	public String founding(@RequestParam(name = "kidsLocation") String kidsLocation, Model m) {
 		
 		int kidsAmount = fdService.getKidAmount(kidsLocation);
 		m.addAttribute("kidsAmount", kidsAmount);
-		return IdentityFilter.loginID+"35/csr/showKids";
+		m.addAttribute("kidsLocation", kidsLocation);
+		return IdentityFilter.loginID+"35/geo/showKids";
 	}
 
 }

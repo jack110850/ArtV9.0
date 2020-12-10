@@ -26,7 +26,7 @@ import tw.group4._35_.login.model.WebsiteMember;
 		urlPatterns = { "/*" }, 
 		initParams = { 
 				@WebInitParam(name = "mustLogin1", value = "/35/csr"), 			
-				@WebInitParam(name = "mustLogin2", value = "/03/aaa/*"),				
+				@WebInitParam(name = "mustLogin2", value = "/04/booking.ctrl"),				
 				@WebInitParam(name = "mustLogin3", value = "/14/bbb/*"),				
 				@WebInitParam(name = "mustLogin4", value = "/04/ccc/*"),				
 				@WebInitParam(name = "mustLogin5", value = "/11/ddd/*"),				

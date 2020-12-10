@@ -41,26 +41,27 @@ public class PositionDao implements InterfacePositionDao {
 		return list;
 	}
 	
-	@Override
-	public List<Activity> selectDistinctToAct() {	 
-		Session session = sessionFactory.getCurrentSession();
-		
-		Query<Object[]> query = session.createQuery("Select id, title, time From Activity");
-		List <Object[]> resultList = query.getResultList();
-		
-		
-		List<Activity> list= new ArrayList<Activity>();
-		for (Object[] item: resultList) {
-			Activity act = new Activity();
-
-			int id = Integer.parseInt((item[0]).toString());
-			act.setId(id);
-			act.setTitle(String.valueOf(item[1]));
-			act.setTime(String.valueOf(item[2]));
-			list.add(act);
-		}
-		
-		return list;
-	}
+//	@Override
+//	public List<Activity> selectDistinctToAct() {	 
+//		Session session = sessionFactory.getCurrentSession();
+//		
+//		Query<Object[]> query = session.createQuery("Select id, uqid, title, time From Activity");
+//		List <Object[]> resultList = query.getResultList();
+//		
+//		
+//		List<Activity> list= new ArrayList<Activity>();
+//		for (Object[] item: resultList) {
+//			Activity act = new Activity();
+//
+//			int id = Integer.parseInt((item[0]).toString());
+//			act.setId(id);
+//			act.setUqid(String.valueOf(item[1]));
+//			act.setTitle(String.valueOf(item[2]));
+//			act.setTime(String.valueOf(item[3]));
+//			list.add(act);
+//		}
+//		
+//		return list;
+//	}
 
 }

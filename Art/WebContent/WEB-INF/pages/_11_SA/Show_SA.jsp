@@ -34,7 +34,7 @@ $(document).ready( function () {
 		<c:forEach var="searchSA" varStatus="stat" items="${BeanList_SA}">
 			<tr>
 				<td>${searchSA.id_SA }</td>
-				<td>${searchSA.name_SA }</td>
+				<td><a href='<c:url value="/ToWebBack.ctrl?id_SA=${searchSA.id_SA }" />'>${searchSA.name_SA }</a></td>
 				<td>${searchSA.country_SA }</td>
 				<td>${searchSA.theme_SA }</td>
 				<td>${searchSA.classification_SA }</td>

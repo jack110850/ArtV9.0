@@ -7,7 +7,7 @@ public class CreateTableInsertDataService {
 	
 	public void execute35() {
 		
-		new CreateTableInsertDataService().executeOrder();
+		executeOrder();
 		
 		System.out.println("資料庫初始化完畢");
 
@@ -30,11 +30,9 @@ public class CreateTableInsertDataService {
 		tableForDB.dropTableBUR();
 		tableForDB.createTableBUR();
 		
-		//CRUD練習用表格
+//		活動場地表格
 		tableForDB.dropTableEventSpace();
 		tableForDB.createTableEventSpace();
-		tableForDB.dropTableSponsorship();
-		tableForDB.createTableSponsorship();
 		
 //		Activity表格插入資料
 		dataForDB.actWriteDB(); //寫入資料到資料庫內的Activity表格

@@ -159,11 +159,23 @@ public class DataForDB {
 		List<Position> listPt = readCSVtoPt();
 		List<Activity> listAct = readDBToAct();
 			
-		for (int i=0; i<listPt.size();i++) {
-			for (Activity item: listAct) {	//遍歷找尋Activity內符合Position物件NO的ID，然後再給Position物件uqid的值
-				if (listPt.get(i).getNo()==item.getId()) {
+		for (Activity item: listAct) {
+
+			//System.out.println(listPt.get(i).getNo()+": "+listPt.get(i).getTitle());
+			//遍歷找尋Activity內符合Position物件NO的ID，然後再給Position物件uqid的值
+			for (int i=0; i<listPt.size();i++) {
+				if (listPt.get(i).getNo().equals(item.getId())) {
 					listPt.get(i).setUqid(item.getUqid());
+					listPt.get(i).setTitle(item.getTitle());
+					listPt.get(i).setCategory(item.getCategory());
+					listPt.get(i).setLocationName(item.getLocationName());
+					listPt.get(i).setPrice(item.getPrice());
+					listPt.get(i).setTime(item.getTime());
+					listPt.get(i).setMainUnit(item.getMainUnit());
+					listPt.get(i).setShowUnit(item.getShowUnit());
 					break;
+				}else {
+					continue;
 				}
 			}
 		}
@@ -394,23 +406,30 @@ public class DataForDB {
 		
 		Blob blob1 = null;
 		Blob blob2 = null;
+		Blob blob3 = null;
 		try {
 //			先輸入為BufferedImage (image)
-			FileInputStream fis1 = new FileInputStream("IOFiles/inputJPG/group4.JPG");
-			FileInputStream fis2 = new FileInputStream("IOFiles/inputJPG/bill.JPG");
+			FileInputStream fis1 = new FileInputStream("IOFiles/inputJPG/admin.JPG");
+			FileInputStream fis2 = new FileInputStream("IOFiles/inputJPG/member.JPG");
+			FileInputStream fis3 = new FileInputStream("IOFiles/inputJPG/alien.JPG");
 			BufferedImage image1 = ImageIO.read(fis1);
 			BufferedImage image2 = ImageIO.read(fis2);
+			BufferedImage image3 = ImageIO.read(fis3);
 //			再把BufferedImage轉為ByteArrayOutputStream (baos)
 			ByteArrayOutputStream baos1 = new ByteArrayOutputStream();
 			ImageIO.write(image1, "jpg", baos1);
 			ByteArrayOutputStream baos2 = new ByteArrayOutputStream();
 			ImageIO.write(image2, "jpg", baos2);
+			ByteArrayOutputStream baos3 = new ByteArrayOutputStream();
+			ImageIO.write(image3, "jpg", baos3);
 //			ByteArrayOutputStream轉ByteArray (ba)
 			byte[] ba1 = baos1.toByteArray();
 			byte[] ba2 = baos2.toByteArray();
+			byte[] ba3 = baos3.toByteArray();
 // 			convert Byte array to Blob using SerialBlob() method
 			blob1 = new SerialBlob(ba1);
 			blob2 = new SerialBlob(ba2);
+			blob3 = new SerialBlob(ba3);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -419,11 +438,13 @@ public class DataForDB {
 				GlobalService.encryptString("oracle"));
 		
 		List<WebsiteMember> list = new ArrayList<WebsiteMember>();
-		WebsiteMember wm1 = new WebsiteMember("admin", password, "凱達格蘭大道一號", "group4@gmail.com", "0988588168", "admin", blob1, "art", now, 100000.0);
-		WebsiteMember wm2 = new WebsiteMember("member", password, "凱達格蘭大道二號", "bill@gmail.com", "0966588168", "user", blob2, "photo", now, 10000.0);
+		WebsiteMember wm1 = new WebsiteMember("admin", password, "陳小明", "凱達格蘭大道一號", "admin@gmail.com", "0988588168", "admin", blob1, "art", now, 100000.0);
+		WebsiteMember wm2 = new WebsiteMember("member", password, "王曉明", "凱達格蘭大道二號", "member@gmail.com", "0966588168", "user", blob2, "photo", now, 10000.0);
+		WebsiteMember wm3 = new WebsiteMember("alien", password, "林大白", "凱達格蘭大道三號", "alien@gmail.com", "0967889881", "user", blob3, "crafting", now, 1000.0);
 
 		list.add(wm1);
 		list.add(wm2);
+		list.add(wm3);
 		
 		SessionFactory factory = HibernateUtilNoWeb.getSessionFactory();
 		Session session = factory.getCurrentSession();
@@ -434,7 +455,7 @@ public class DataForDB {
 		try {
 			for (WebsiteMember item: list) {
 				
-				WebsiteMember bean = new WebsiteMember(item.getName(), item.getPassword(), item.getAddress(), item.getEmail(), item.getTel(), item.getMemberType(), item.getMemberPic(), item.getPreference(), item.getRegisterTime(), item.getPurchaseLimit());
+				WebsiteMember bean = new WebsiteMember(item.getName(), item.getPassword(), item.getRealName(), item.getAddress(), item.getEmail(), item.getTel(), item.getMemberType(), item.getMemberPic(), item.getPreference(), item.getRegisterTime(), item.getPurchaseLimit());
 				session.save(bean);
 				counter++;
 				

@@ -79,4 +79,15 @@ public class StreetArtistBeanDAO {
 		}
 		return false;
 	}
+	
+	public int showSal(int id) {
+		Session session = sessionFactory.getCurrentSession();
+		UserSABean uS = session.get(UserSABean.class,id);
+		
+		if (uS != null) {
+			int sal = uS.getSal_SA();
+			return sal;
+		}
+		return 0 ;
+	}
 }

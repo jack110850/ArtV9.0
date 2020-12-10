@@ -11,7 +11,7 @@
 <%-- 	<jsp:include page="/fragment/top.jsp" /> --%>
 		<br>
 		<br>
-	<form method=GET action="<c:url value='/04/CMS/Insert.ctrl'/>">
+	<form method=POST action="<c:url value='/04/CMS/Insert.ctrl'/>" enctype="multipart/form-data">
 
 		<div class="container">
 		<div class="form-group">
@@ -103,6 +103,12 @@
 					<td>活動描述</td>
 					<td><textarea rows="8" cols="" name="description"
 							required="required" class="form-control" ></textarea></td>
+				</tr>
+				<tr>
+					<td>圖片上傳</td>
+					<td><Input Type="File" Name="file" >
+					
+					</td>
 				</tr>
 
 			</table>

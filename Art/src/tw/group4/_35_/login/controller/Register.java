@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.sql.Blob;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Base64;
 import java.util.Objects;
 
 import javax.imageio.ImageIO;
@@ -16,7 +17,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.sql.rowset.serial.SerialBlob;
 
-import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -61,11 +61,12 @@ public class Register {
 		
 		String name = member.getName();
 		String password = member.getPassword();
+		String realName = member.getRealName();
 		String email = member.getEmail();
 		String tel = member.getTel();
 		
-		if(name.equals("")||password.equals("")||email.equals("")||tel.equals("")) {
-			m.addAttribute("errMsg", "姓名、密碼、E-mail和電話為必填");
+		if(name.equals("")||password.equals("")||realName.equals("")||email.equals("")||tel.equals("")) {
+			m.addAttribute("errMsg", "帳號、密碼、真實姓名、E-mail和電話為必填");
 			return IdentityFilter.loginID+"35/login/register";
 		}else if(!password.matches(regexPwd)) {
 			m.addAttribute("errMsg", "密碼須包含至少一個大、小寫英文字母、數字、特殊符號，且八位數以上");
@@ -88,13 +89,16 @@ public class Register {
 		HttpServletRequest httpReq = (HttpServletRequest) request;	
 		HttpSession session = httpReq.getSession();
 		LocalDateTime now = LocalDateTime.now();
-//		加密使用者名稱+時間作為session識別字串及路徑變數
+//		把member和mFile放進session傳遞，name透過PathVariable傳遞
+		session.setAttribute(name+"member", member);
+		session.setAttribute(name+"mFile", mFile);
+//		加密使用者名稱+時間作為驗證執行的路徑變數
+//		執行網址必須沒有斜線否則會出錯
 		String nameEncoded = GlobalService.encryptString(member.getName()+now.toString());
-//		把member和mFile放進session傳遞，nameEncoded透過PathVariable傳遞
-		session.setAttribute(nameEncoded, member);
-		session.setAttribute(nameEncoded+"mFile", mFile);
+		String nameEncodedsNoSlash = nameEncoded.replace("/", "");
+		
 //		執行到這代表綁定表單輸入資料預備動作都完成了，接下來進行Email驗證
-		String authUrl = "<h1>得藝的一天會員驗證</h1><p>若非本人操作請忽略此封信件</p><h2><a href=\"http://localhost:8080/Art/35/"+nameEncoded+"/emailAuthOk.ctrl\" target=\"_blank\" title=\"得藝的一天驗證成功\">點此進行驗證</a></h2>";
+		String authUrl = "<h1>得藝的一天會員驗證</h1><p>若非本人操作請忽略此封信件</p><h2><a href=\"http://localhost:8080/Art/35/emailAuth/"+name+"/"+nameEncodedsNoSlash+".ctrl\" target=\"_blank\" title=\"得藝的一天驗證成功\">點此進行驗證</a></h2>";
 		JavaMail mail = new JavaMail();
 		mail.SendMail(email, authUrl);
 		m.addAttribute("emailMsg", "請至您填寫的E-mail信箱收信，點擊信件內連結以完成註冊");
@@ -103,13 +107,13 @@ public class Register {
 	}
 	
 //	從外部點擊網址連結要用GetMapping，若使用者點擊此代表驗證通過，開始按照邏輯塞會員資料進資料庫和session
-	@GetMapping("/35/{nameEncoded}/emailAuthOk.ctrl")
-	public String checkOkEmailAuth(@PathVariable String nameEncoded, Model m, HttpServletRequest request){
+	@GetMapping("/35/emailAuth/{name}/{nameEncodedNoSlash}"+".ctrl")
+	public String checkOkEmailAuth(@PathVariable String name, @PathVariable String nameEncodedNoSlash, Model m, HttpServletRequest request){
 		
 //		先把session內存的東西找回來，PathVariable傳遞了使用者名稱加密過後的雜湊碼
 		HttpSession session = request.getSession();
 //		如果沒偵測到session內存在nameEncoded屬性，Model新增丟失session訊息，並導向首頁
-		if (Objects.isNull(session.getAttribute(nameEncoded))) {
+		if (Objects.isNull(session.getAttribute(name+"member"))) {
 			m.addAttribute("sessionLost", "因server重啟等原因，Email驗證已失效，請重新註冊");
 			return IdentityFilter.loginID + "index/index";
 		}		
@@ -117,8 +121,8 @@ public class Register {
 //		透過前述判斷式return首頁避免此窘狀
 //		jsp預設session會自動創造，只是裡面會是空的，沒有任何屬性
 //		httpReq.getSession()即可取得jsp自動創造的session
-		WebsiteMember member = (WebsiteMember) session.getAttribute(nameEncoded);
-		MultipartFile mFile = (MultipartFile) session.getAttribute(nameEncoded+"mFile");
+		WebsiteMember member = (WebsiteMember) session.getAttribute(name+"member");
+		MultipartFile mFile = (MultipartFile) session.getAttribute(name+"mFile");
 		
 //		如果執行到此，代表註冊成功
 //		加入名稱和歡迎用語，等等返回註冊成功頁面
@@ -139,8 +143,8 @@ public class Register {
 				byte[] ba = baos.toByteArray();
 //	 			convert Byte array to Blob using SerialBlob() method
 				blob = new SerialBlob(ba);
-				
-		        String encodedString = Base64.encodeBase64String(ba);
+
+		        String encodedString = Base64.getEncoder().encodeToString(ba);
 				session.setAttribute("memberPic", encodedString);
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -153,7 +157,7 @@ public class Register {
 				
 //				把mFile的byte[]叫出來轉Base64字串
 				byte[] memberPicByteArray = mFile.getBytes();
-				String encodedString = Base64.encodeBase64String(memberPicByteArray);
+				String encodedString = Base64.getEncoder().encodeToString(memberPicByteArray);
 				session.setAttribute("memberPic", encodedString);
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -166,7 +170,7 @@ public class Register {
 		String passwordEncoded = GlobalService.getMD5Endocing(
 				GlobalService.encryptString(member.getPassword()));
 		
-		WebsiteMember memberRegisterInfo = new WebsiteMember(member.getName(), passwordEncoded, 
+		WebsiteMember memberRegisterInfo = new WebsiteMember(member.getName(), passwordEncoded, member.getRealName(),
 										   member.getAddress(), member.getEmail(), member.getTel(), 
 										   "user", blob, "", now, 10000.0);
 		wmService.insert(memberRegisterInfo);
@@ -174,8 +178,8 @@ public class Register {
 //		註冊成功後同時也要登入，所以叫出session來放attribute "member"
 		session.setAttribute("member", memberFullInfo);
 //		移除已經無用的sessionAttribute
-		session.removeAttribute(nameEncoded);
-		session.removeAttribute(nameEncoded+"mFile");
+		session.removeAttribute(name+"member");
+		session.removeAttribute(name+"mFile");
 //		下列方法是照片存webapp設定的路徑，再存資料庫
 ////		取得上傳原始檔案的名稱
 //		String fileName = mfile.getOriginalFilename();

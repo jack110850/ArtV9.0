@@ -14,8 +14,8 @@ import javax.mail.internet.MimeMessage.RecipientType;
 public class JavaMail {
 	// ---------------------------------------------------------基本資料
 
-		private String userName = "netflixflld@gmail.com"; // 寄件者信箱
-		private String password = "netflix104"; // 寄件者密碼
+		private String userName = "aaartgroup4@gmail.com"; // 寄件者信箱
+		private String password = "aaart1225"; // 寄件者密碼
 //		private String email = ""; // 收件者郵箱
 		private String subject = "歡迎加入得藝的一天"; // 標題
 //		private String txt = "<h1>郵件內容</h1><h2>文字內容</h2>"; // 內容

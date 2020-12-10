@@ -44,11 +44,16 @@ public class ARTProduct implements Serializable{
 	@Column(name = "APIMGBLOB")
 	private byte[] productImgBlob;
 
+	@Column(name = "APSCORE")
+	private Integer productScore;
+	
+	@Column(name = "APRATER")
+	private Integer productRater;
+	
 	public ARTProduct() {
 
 	}
 	
-
 
 
 	public ARTProduct(String productId, String productTitle, String productType, String productPrice, String productImg,
@@ -134,6 +139,28 @@ public class ARTProduct implements Serializable{
 	public void setProductImgBlob(byte[] productImgBlob) {
 		this.productImgBlob = productImgBlob;
 	}
+
+
+
+	public Integer getProductScore() {
+		return productScore;
+	}
+
+
+	public void setProductScore(Integer productScore) {
+		this.productScore = productScore;
+	}
+
+
+	public Integer getProductRater() {
+		return productRater;
+	}
+
+
+	public void setProductRater(Integer productRater) {
+		this.productRater = productRater;
+	}
+
 
 
 }

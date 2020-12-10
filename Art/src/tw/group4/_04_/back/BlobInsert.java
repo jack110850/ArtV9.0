@@ -14,8 +14,8 @@ public class BlobInsert {
 		Blob blob2 = null;
 		  try {
 		//   先輸入為BufferedImage (image)
-		   FileInputStream fis1 = new FileInputStream("inputJPG/group4.jpeg");
-		   FileInputStream fis2 = new FileInputStream("inputJPG/bill.jpeg");
+		   FileInputStream fis1 = new FileInputStream("./IOFiles/inputJPG/music.jpg");
+		   FileInputStream fis2 = new FileInputStream("./IOFiles/inputJPG/bill.jpg");
 		   BufferedImage image1 = ImageIO.read(fis1);
 		   BufferedImage image2 = ImageIO.read(fis2);
 		//   再把BufferedImage轉為ByteArrayOutputStream (baos)
@@ -29,6 +29,7 @@ public class BlobInsert {
 //		    convert Byte array to Blob using SerialBlob() method
 		   blob1 = new SerialBlob(ba1);
 		   blob2 = new SerialBlob(ba2);
+		   	System.out.println(blob1);
 		  } catch (Exception e) {
 		   e.printStackTrace();
 		  }

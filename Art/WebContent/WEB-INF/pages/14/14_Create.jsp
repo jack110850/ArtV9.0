@@ -3,7 +3,26 @@
 <%@ page import="tw.group4._14_.*"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <meta http-equiv="Content-Type" content="multipart/form-data; charset=utf-8"/>
+<script>
+$(function(){
+    $("#queryType").change(function() {
 
+		fetch(url)
+			.then((response) => {
+  			return response.blob();
+		})
+
+		.then((imageBlob) => {
+  			let img = document.createElement('IMG')
+  			document.querySelector('.newImg').appendChild(img);
+  		// 將 blog 物件轉為 url
+  			img.src = URL.createObjectURL(imageBlob);
+		})
+
+    })
+})
+
+</script>
 
 <div class="container">
 

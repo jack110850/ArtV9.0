@@ -23,13 +23,9 @@ public class OracleSQL {
 
 	private static final String DROP_Table_ORDERSAP = "DROP TABLE ORDERSAP";
 	
-	public static String getDropTableOrderitemsap() {
-		return DROP_Table_ORDERITEMSAP;
-	}
-
-	public static String getDropTableOrdersap() {
-		return DROP_Table_ORDERSAP;
-	}
+	private static final String DROP_Table_MessageBoardAP = "DROP TABLE MESSAGEBOARDAP";
+	
+	
 
 	private static final String CREATE_APMember = " CREATE TABLE APMEMBER " 
 			
@@ -49,6 +45,8 @@ public class OracleSQL {
 			+ " apimg			varchar2(200),  "
 			+ " apdes				CLOB,  "		
 			+ " apnum				number(8,2),"
+			+ " apscore				number(8,2),"
+			+ " aprater				number(8,2),"
 			+ " apimgBlob				BLOB )";
 			
 	
@@ -65,6 +63,7 @@ public class OracleSQL {
 	private static final String CREATE_Orders_Oracle = "Create Table ORDERSAP "
 			+ "(ORDERNOAP  integer GENERATED as IDENTITY constraint ORDERSAP_PK primary key, "
 			+ " MEMBERID          varchar2(20), "
+			+ " EMAIL   		  varchar2(164), "
 			+ " SHIPPINGADDRESS   varchar2(164), "
 			+ " BNO               varchar2(20), " 
 			+ " invoiceTitle      varchar2(72), " 
@@ -80,6 +79,26 @@ public class OracleSQL {
 			+ " PRODUCTNUMAP             int, "
 			+ " PRODUCTPRICEAP           varchar2(20) "
 			+ " ) ";
+	
+	
+	private static final String CREATE_MessageBoardAP = "Create TABLE MESSAGEBOARDAP "
+			+ "(MESSAGENOAP number generated as identity constraint MESSAGENOAP_PK primary key, "
+			+ " APID 			   integer ,"
+			+ " MEMBERID           varchar2(172), "
+			+ " TIME               Date, "
+			+ " SUBJECTAP          varchar2(172), "
+			+ " CONTENTAP          CLOB "
+			+ " ) ";
+
+	
+	
+	public static String getDropTableMessageboardap() {
+		return DROP_Table_MessageBoardAP;
+	}
+
+	public static String getCreateMessageboardap() {
+		return CREATE_MessageBoardAP;
+	}
 
 	public static String getCreateOrderitemsap() {
 		return CREATE_OrderItemsAP;
@@ -137,5 +156,11 @@ public class OracleSQL {
 		return CREATE_APCart;
 	}
 	
-	
+	public static String getDropTableOrderitemsap() {
+		return DROP_Table_ORDERITEMSAP;
+	}
+
+	public static String getDropTableOrdersap() {
+		return DROP_Table_ORDERSAP;
+	}
 }

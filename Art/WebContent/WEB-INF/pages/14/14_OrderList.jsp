@@ -15,7 +15,23 @@
 </style>
 </head>
 <body style="background: #ffffff;">
-
+<!-- start banner Area -->
+	<section class="banner-area relative" id="home">
+		<div class="overlay overlay-bg"></div>
+		<div class="container">
+			<div class="row d-flex align-items-center justify-content-center">
+				<div class="about-content col-lg-12">
+					<h1 class="text-white">AAART Shop</h1>
+					<p class="text-white link-nav">
+						<a href="index.html">Home </a> <span class="lnr lnr-arrow-right"></span>
+						<a href="<c:url value='/14/shopListController.ctrl' />"> Shop</a>
+						<span class="lnr lnr-arrow-right"></span> <span>訂購紀錄</span>
+					</p>
+				</div>
+			</div>
+		</div>
+	</section>
+<!-- End banner Area -->
 
 	
     <p/>
@@ -48,6 +64,6 @@
 			<td id='borderA' align="center" colspan="4"><a href="<c:url value='/14/shopListController.ctrl' />">回首頁</a></td>
 		</tr>
 	</TABLE>
-	</center>
+
 </body>
 </html>

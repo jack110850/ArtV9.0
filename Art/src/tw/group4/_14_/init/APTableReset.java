@@ -66,7 +66,16 @@ public class APTableReset {
 		stmt.executeUpdate(OracleSQL.getCreateOrderitemsap());
 		System.out.println("OrderItemsAP Table Creat <3");
 		
+		try {
+			stmt.executeUpdate(OracleSQL.getDropTableMessageboardap());
+			System.out.println("Drop Messageboardap Table!");
+		}catch (Exception ex) {
+			ex.printStackTrace();
+		}
 		
+		stmt.executeUpdate(OracleSQL.getCreateMessageboardap());
+		System.out.println("Messageboardap Table Creat <3");
+
 		
 		//注意檔案路徑可能須修改
 		File file = new File("inputCSV/ink3.csv");
@@ -76,8 +85,8 @@ public class APTableReset {
 				BufferedReader br = new BufferedReader(isr);) {
 				con.setAutoCommit(false);
 				String jdbc_insert_sql = "INSERT INTO Artproduct " + 
-				" (aptitle,  aptype, apprice, apimg, apdes, apnum, apimgblob) "
-						+ " VALUES ( ?, ?, ?, ?, ?, ?, ?)";
+				" (aptitle,  aptype, apprice, apimg, apdes, apnum, apimgblob, apscore, aprater) "
+						+ " VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 				try (PreparedStatement pstmt = con.prepareStatement(jdbc_insert_sql);) {
 
@@ -122,7 +131,8 @@ public class APTableReset {
 							if(inputStream != null)inputStream.close();
 						}
 							
-						
+						pstmt.setInt(8, 1);
+						pstmt.setInt(9, 1);
 						
 						pstmt.addBatch();
 						pstmt.executeBatch();

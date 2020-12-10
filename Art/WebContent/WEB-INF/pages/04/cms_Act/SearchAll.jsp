@@ -17,7 +17,7 @@
 }
 
 .title {
-	width: 550px;
+	width: 500px;
 }
 
 .site {
@@ -29,7 +29,7 @@
 }
 
 .do {
-	width: 100px;
+ 	width: 100px; 
 }
 #search{
  width: 250px;
@@ -101,24 +101,32 @@
 
 			<table class="table table-bordered">
 				<tr>
+					<th class="do">座位</th>
 					<th class="no">編號</th>
 					<th class="title">節目名稱</th>
 					<th class="site">場地</th>
 					<!-- 			<th class="date">日期</th> -->
 					<th class="do">操作</th>
+					<th class="do"></th>
 				</tr>
 
 				<%--使用JSTL 執行for loop ${show.no}取map內value --%>
 				<c:forEach items="${currentPage}" var="show" varStatus="idx">
 					<tr>
-						<!-- 傳送節目資訊 -->
+						<td>
+						<form name="order" action="<c:url value='/04/CMS/seatSearch.ctrl'/>" method="get">
+								<button name="actno" type="submit" value=${show.no} class="btn btn-outline-info" >座位</button>
+							<!-- 這些隱藏欄位都會送到後端 -->
+							<Input type='hidden' name='page' value='${page}'> <Input type='hidden' name='category' value='${category}'>
+						</form>
+						</td>
 						<td>${show.no}</td>
 						<td>${show.title}</td>
 						<td>${show.site}</td>
 
 						<form name="order" action="<c:url value='/04/CMS/Update1.ctrl'/>" method="get">
 							<td>
-								<button name="" type="submit" value="" class="btn btn-info">修改</button>
+								<button name="" type="submit" value="" class="btn btn-outline-info">修改</button>
 							</td>
 							<!-- 這些隱藏欄位都會送到後端 -->
 							<Input type='hidden' name='actno' value="${show.no}"> <Input
@@ -126,10 +134,9 @@
 							<Input type='hidden' name='searchString' value='${searchString}'>
 						</form>
 
-											<form name="order" action="<c:url value='/04/CMS/Delete.ctrl'/>" method="get">
+							<form name="order" action="<c:url value='/04/CMS/Delete.ctrl'/>" method="get">
 							<td>
-								<button name="actno" type="submit" value=${show.no
-									} class="btn btn-info" onclick="return del()">刪除</button></td>
+								<button name="actno" type="submit" value=${show.no} class="btn btn-outline-info" onclick="return del()">刪除</button></td>
 							<!-- 這些隱藏欄位都會送到後端 -->
 							<Input type='hidden' name='page' value='${page}'> 
 							<Input type='hidden' name='category' value='${category}'>

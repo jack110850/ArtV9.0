@@ -9,7 +9,8 @@
 							<div class="single-footer-widget">
 								<h6>關於我們</h6>
 								<p>
-									Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore dolore magna aliqua.
+								經典是這樣一種著作——它不斷引生批判它的種種論說的雲朵，<br>而又不停地將其擺脫，它永遠不會完結它所要敘說的東西。<br>
+								就和我們一樣。
 								</p>
 								<p class="footer-text">
 									<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
@@ -20,11 +21,11 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 						</div>
 						<div class="col-lg-5  col-md-6 col-sm-6">
 							<div class="single-footer-widget">
-								<h6>Newsletter</h6>
-								<p>Stay update with our latest</p>
+								<h6>聯繫我們</h6>
+								<p>隨時了解我們的最新動態</p>
 								<div class="" id="mc_embed_signup">
 									<form target="_blank" novalidate="true" action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01" method="get" class="form-inline">
-										<input class="form-control" name="EMAIL" placeholder="Enter Email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Email '" required="" type="email">
+										<input class="form-control" name="EMAIL" placeholder="輸入您的 Email" onfocus="this.placeholder = ''" onblur="this.placeholder = '輸入您的 Email '" required="" type="email">
 			                            	<button class="click-btn btn btn-default"><span class="lnr lnr-arrow-right"></span></button>
 			                            	<div style="position: absolute; left: -5000px;">
 												<input name="b_36c4fd991d266f23781ded980_aefe40901a" tabindex="-1" value="" type="text">

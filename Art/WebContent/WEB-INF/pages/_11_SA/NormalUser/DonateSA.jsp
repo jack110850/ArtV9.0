@@ -32,9 +32,11 @@
 	</span>
 </form>
 </div>
-<h1>地方街頭藝人 ${userView.name_SA } 需要您的支持與鼓勵</h1>
+<h1 style="filter: glow(color=#3366FF,strength=3); height:10px; color:blue; padding:1px;font-style:oblique;text-align: center;">
+	地方街頭藝人<u> ${userView.name_SA } </u>需要您的支持與鼓勵
+</h1>
 <form action="doDonate.ctrl" method="get">
-<table class="display">
+<table class="display" align="center" style="background-color: rgb(196, 223, 77);margin-top: 40px">
 	<tr>
 		<td>姓名：</td>
 		<td>${userView.name_SA }</td>
@@ -47,7 +49,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td><input type="submit" name="submit" value="確認並送出"></td>
+			<td colspan="2" align="center"><input type="submit" name="submit" value="確認並送出"></td>
 		</tr>
 </table>
 </form>

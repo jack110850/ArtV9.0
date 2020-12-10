@@ -36,10 +36,20 @@ public class Position implements Serializable, Comparable<Position>{
 	private Double longitude;
 	@Transient
 	private Double distance;
-	@Transient
+	@Column(name = "title")
 	private String title;
-	@Transient
+	@Column(name = "category")
+	private Integer category;
+	@Column(name = "locationName")
+	private String locationName;
+	@Column(name = "price")
+	private String price;
+	@Column(name = "time")
 	private String time;
+	@Column(name = "mainUnit")
+	private String mainUnit;
+	@Column(name = "showUnit")
+	private String showUnit;
 	
 	public Position() {
 		
@@ -152,12 +162,9 @@ public class Position implements Serializable, Comparable<Position>{
 		this.distance = distance;
 	}
 
-
-
 	public String getTitle() {
 		return title;
 	}
-
 
 
 	public void setTitle(String title) {
@@ -165,17 +172,64 @@ public class Position implements Serializable, Comparable<Position>{
 	}
 
 
+	public Integer getCategory() {
+		return category;
+	}
+
+
+	public void setCategory(Integer category) {
+		this.category = category;
+	}
+
+
+	public String getLocationName() {
+		return locationName;
+	}
+
+
+	public void setLocationName(String locationName) {
+		this.locationName = locationName;
+	}
+
+
+	public String getPrice() {
+		return price;
+	}
+
+
+	public void setPrice(String price) {
+		this.price = price;
+	}
+
 
 	public String getTime() {
 		return time;
 	}
 
 
-
 	public void setTime(String time) {
 		this.time = time;
 	}
 
+
+	public String getMainUnit() {
+		return mainUnit;
+	}
+
+
+	public void setMainUnit(String mainUnit) {
+		this.mainUnit = mainUnit;
+	}
+
+
+	public String getShowUnit() {
+		return showUnit;
+	}
+
+
+	public void setShowUnit(String showUnit) {
+		this.showUnit = showUnit;
+	}
 
 
 	@Override

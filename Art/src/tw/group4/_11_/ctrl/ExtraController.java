@@ -1,8 +1,17 @@
 package tw.group4._11_.ctrl;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,6 +25,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import tw.group4._11_.model.UserSABean;
 import tw.group4._11_.model.UserSADao;
 import tw.group4._11_.model.UserSAService;
+import tw.group4._35_.login.model.WebsiteMemberService;
 import tw.group4.util.IdentityFilter;
 
 @Controller
@@ -25,13 +35,53 @@ public class ExtraController {
 	private UserSADao uDAO;
 	@Autowired
 	private UserSAService uService;
+	@Autowired
+	private WebsiteMemberService wDaoService;
 	
 	@RequestMapping(path = "/userStreetArtistPage.ctrl" ,method = RequestMethod.GET)
-	public String showingSA(Model m) {
+	public String showingSA(
+			@RequestParam(name = "page" , required = false) Integer page,
+			@RequestParam(name = "query" ,required = false) String query,
+			Model m) {
 		
-		List<UserSABean> list = uService.selectAllSA();
 		
-		m.addAttribute("BeanList_SA",list);
+		if (query != "" && query != null) {
+			
+			if (page == null || page == 0) {
+				page =1;
+			}
+			
+			List<UserSABean> querylist = uService.selectQueryAll(page, query);
+			int totalPage = uService.getPages(query);
+			
+			List<Integer> totlePages = new ArrayList<Integer>();
+			for (int i = 1; i <= totalPage; i++) {
+				totlePages.add(i);
+			}
+			
+			m.addAttribute("BeanList_SA",querylist);
+			m.addAttribute("query",query);
+			m.addAttribute("PageMum_SA",page);
+			m.addAttribute("totalPages_SA",totalPage);
+			m.addAttribute("allPages",totlePages);
+		}else {
+			if (page == null || page == 0) {
+				page =1;
+			}
+			
+			List<UserSABean> list = uService.selectPage(page);
+			int totalPage = uService.getTotlaPage();
+			
+			List<Integer> totlePages = new ArrayList<Integer>();
+			for (int i = 1; i <= totalPage; i++) {
+				totlePages.add(i);
+			}
+			
+			m.addAttribute("BeanList_SA",list);
+			m.addAttribute("PageMum_SA",page);
+			m.addAttribute("totalPages_SA",totalPage);
+			m.addAttribute("allPages",totlePages);
+		}
 		
 		return IdentityFilter.loginID+"_11_SA/NormalUser/Showing_2";
 	}
@@ -66,7 +116,12 @@ public class ExtraController {
 	@GetMapping(value = "/ToDonate.ctrl")
 	public String toDonate(
 			@RequestParam(name = "id_SA") String id_dn,
+			HttpSession session,
 			Model m) {
+		if (session == null) {
+			return "redirect:/userStreetArtistPage.ctrl";
+		}
+		
 		int id = Integer.parseInt(id_dn);
 		List<UserSABean> list = uDAO.searchID(id);
 		
@@ -78,7 +133,16 @@ public class ExtraController {
 	public String doDonate(
 			@RequestParam(name = "id_SA") String id_SA,
 			@RequestParam(name = "sal") String salWeb,
-			Model m) {
+			ServletRequest request,
+			ServletResponse response,
+			Model m) throws IOException, ServletException{
+		
+		HttpServletResponse httpRes = (HttpServletResponse) response;
+		HttpServletRequest httpReq = (HttpServletRequest) request;
+		HttpSession session = httpReq.getSession();
+		
+		
+		
 		int id = Integer.parseInt(id_SA);
 		Map<String, String> errors = new HashMap<String, String>();
 		m.addAttribute("errors", errors);
@@ -101,4 +165,32 @@ public class ExtraController {
 		m.addAttribute("name","donate to streetartist!!");
 		return IdentityFilter.loginID+"_11_SA/NormalUser/Success";
 	}
+	
+//	@GetMapping(path ="/doDonate.ctrl")
+//	public String doDonate(
+//			@RequestParam(name = "id_SA") String id_SA,
+//			@RequestParam(name = "sal") String salWeb,
+//			Model m) {
+//		int id = Integer.parseInt(id_SA);
+//		Map<String, String> errors = new HashMap<String, String>();
+//		m.addAttribute("errors", errors);
+//		
+//		if (salWeb == null || salWeb.length()==0) {
+//			errors.put("msg", "please enter a number!!");
+//		} 
+//		
+//		try {
+//			int sal = Integer.parseInt(salWeb);
+//			if (sal <= 0) {
+//				errors.put("msg", "不可輸入小於零或等於零的數字");
+//			}
+//			uDAO.donateToSA(id, sal);
+//		} catch (Exception e) {
+//			errors.put("msg", "請勿輸入數字以外的字串!!");
+//			e.printStackTrace();
+//		}
+//		
+//		m.addAttribute("name","donate to streetartist!!");
+//		return IdentityFilter.loginID+"_11_SA/NormalUser/Success";
+//	}
 }

@@ -22,7 +22,7 @@ public class FindNear {
 	@RequestMapping(path = "/35/findNear.ctrl", method = RequestMethod.GET)
     public String findNear(@RequestParam(name = "userLocation") String userLocation, Model m) {
 		
-		List<Position> list = ptService.setDistance(userLocation);//傳使用者地點進去service計算和活動距離
+		List<Position> list = ptService.selectNearActs(userLocation);//傳使用者地點進去service計算和活動距離
 		m.addAttribute("userLocation", userLocation);
 		m.addAttribute("nearActList", list);
 		return IdentityFilter.loginID+"35/geo/nearAct";

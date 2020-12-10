@@ -18,8 +18,8 @@ public class Create_SA2 {
 
 	public static final String UTF8_BOM = "\uFEFF"; // 定義 UTF-8的BOM字元
 	
-//	public void execute11() {
-	public static void main(String[] args) {
+	public void execute11f() {
+//	public static void main(String[] args) {
 		String line = "";
 
 		try (Connection con = DriverManager.getConnection(DBservice_Oracle2.getDbUrl(),
@@ -61,56 +61,56 @@ public class Create_SA2 {
 						if (token[3].trim().contains("串珠") || token[3].trim().contains("裝飾")) {
 							FileInputStream fis1 = new FileInputStream("WebContent/WEB-INF/pages/_11_SA/pic/Beaded.jpg");
 							bUSA.setFis(fis1);
-							System.out.println(i+", 1");
+//							System.out.println(i+", 1");
 						}else if (token[3].trim().contains("書法")) {
 							FileInputStream fis2 = new FileInputStream("WebContent/WEB-INF/pages/_11_SA/pic/calligraphy.jpg");
 							bUSA.setFis(fis2);
-							System.out.println(i+", 2");
+//							System.out.println(i+", 2");
 						}else if (token[3].trim().contains("電子琴") || token[3].trim().contains("電鋼琴")) {
 							FileInputStream fis3 = new FileInputStream("WebContent/WEB-INF/pages/_11_SA/pic/elecpiano.jpg");
 							bUSA.setFis(fis3);
-							System.out.println(i+", 3");
+//							System.out.println(i+", 3");
 						}else if (token[3].trim().contains("塗鴉") || token[3].trim().contains("噴畫")) {
 							FileInputStream fis4 = new FileInputStream("WebContent/WEB-INF/pages/_11_SA/pic/Graffiti.jpg");
 							bUSA.setFis(fis4);
-							System.out.println(i+", 4");
+//							System.out.println(i+", 4");
 						}else if (token[3].trim().contains("吉他")) {
 							FileInputStream fis5 = new FileInputStream("WebContent/WEB-INF/pages/_11_SA/pic/guitar.jpg");
 							bUSA.setFis(fis5);
-							System.out.println(i+", 5");
+//							System.out.println(i+", 5");
 						}else if (token[3].trim().contains("魔術")) {
 							FileInputStream fis6 = new FileInputStream("WebContent/WEB-INF/pages/_11_SA/pic/magic.jpg");
 							bUSA.setFis(fis6);
-							System.out.println(i+", 6");
+//							System.out.println(i+", 6");
 						}else if (token[3].trim().contains("紙藝")) {
 							FileInputStream fis8 = new FileInputStream("WebContent/WEB-INF/pages/_11_SA/pic/paperArt.jpg");
 							bUSA.setFis(fis8);
-							System.out.println(i+", 8");
+//							System.out.println(i+", 8");
 						}else if (token[3].trim().contains("剪")) {
 							FileInputStream fis9 = new FileInputStream("WebContent/WEB-INF/pages/_11_SA/pic/Paper-cut.jpg");
 							bUSA.setFis(fis9);
-							System.out.println(i+", 9");
+//							System.out.println(i+", 9");
 						}else if (token[3].trim().contains("尺八")) {
 							FileInputStream fis10 = new FileInputStream("WebContent/WEB-INF/pages/_11_SA/pic/somthing.jpg");
 							bUSA.setFis(fis10);
-							System.out.println(i+", 10");
+//							System.out.println(i+", 10");
 						}else if (token[3].trim().contains("小提琴")) {
 							FileInputStream fis12 = new FileInputStream("WebContent/WEB-INF/pages/_11_SA/pic/violin.jpg");
 							bUSA.setFis(fis12);
-							System.out.println(i+", 12");
+//							System.out.println(i+", 12");
 						}else if (token[4].trim().contains("工藝")) {
 							FileInputStream fis11 = new FileInputStream("WebContent/WEB-INF/pages/_11_SA/pic/Unknown.jpg");
 							bUSA.setFis(fis11);
-							System.out.println(i+", 11");
+//							System.out.println(i+", 11");
 						}else{
 							FileInputStream fis7 = new FileInputStream("WebContent/WEB-INF/pages/_11_SA/pic/noIMG.jpg");
 							bUSA.setFis(fis7);
-							System.out.println(i+", 7");
+//							System.out.println(i+", 7");
 						}
 						bUSA.setSal_SA(0);
 
 						int n = saveSA(bUSA, con);
-						System.out.println("新增一筆DETAIL_SA紀錄是否成功=" + n);
+//						System.out.println("新增一筆DETAIL_SA紀錄是否成功=" + n);
 					}
 //					if (bUSA.getFis() != null) {
 //						bUSA.getFis().close();

@@ -9,15 +9,8 @@
 </head>
 <body>
 	<br>
-	<div class=title>
+	<div class="title">
 		<h1 align="center">目前開放租借的場地如下</h1>
-	</div>
-	<div class="back" align="right">
-		<form action="<c:url value='/index.html'/> " method="get">
-			<div class="submitButton">
-				<input type="submit" class="" name="submit" value="返回後台管理系統首頁">
-			</div>
-		</form>
 	</div>
 	<br>
 	<div class="addData" align="right">
@@ -42,7 +35,7 @@
 		</form>
 	</div>
 	<br>
-	<div class=content>
+	<div class="content">
 		<table id="35"
 			class="display table table-bordered table-hover table-blue">
 			<thead>
@@ -118,7 +111,21 @@
 <script>
 $(document).ready( function () {
     $('#35').DataTable( {
-        scrollY: 400
+        scrollY: 400,
+        "language": {
+        	"search": "搜尋:",
+            "lengthMenu": "每頁展示 _MENU_ 個項目",
+            "zeroRecords": "抱歉，查無搜尋結果",
+            "info": "展示第 _PAGE_ 頁，總計 _PAGES_ 頁",
+            "infoEmpty": "沒有紀錄",
+            "infoFiltered": "(filtered from _MAX_ total records)",
+            "paginate": {
+                "first":      "第一頁",
+                "last":       "最後一頁",
+                "next":       "下一頁",
+                "previous":   "前一頁"
+            }
+        }
     } );
 });
 </script>

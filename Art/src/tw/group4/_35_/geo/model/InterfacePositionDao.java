@@ -8,6 +8,6 @@ public interface InterfacePositionDao {
 
 	List<Position> readNoNullToPt();
 
-	List<Activity> selectDistinctToAct();
+//	List<Activity> selectDistinctToAct();
 
 }

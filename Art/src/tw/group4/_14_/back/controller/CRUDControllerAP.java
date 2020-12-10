@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import tw.group4._14_.back.ARTProduct;
 import tw.group4._14_.back.dao.ProductBeanDAOService;
+import tw.group4._14_.front.model.OrderListBeamAP;
 import tw.group4._14_.init.ImageProcess;
 import tw.group4.util.IdentityFilter;
 
@@ -40,7 +41,7 @@ public class CRUDControllerAP {
 	@Autowired
 	ServletContext ctx;
 	
-	@RequestMapping(path = "/14/CRUDNoDataTable.ctrl", method = RequestMethod.GET)
+	@RequestMapping(path = "/14/CRUDNoDataTable.ctrl", method = RequestMethod.GET) //不用 DataTable 時使用此方法
 	public String processAction(Model m, @RequestParam(name = "pageNo" ,required = false) Integer pageNo) {
 		
 			if (pageNo == null||pageNo ==0) {
@@ -64,7 +65,7 @@ public class CRUDControllerAP {
 	}
 	
 	
-	@RequestMapping(path = "/14/CRUD.ctrl", method = RequestMethod.GET)
+	@RequestMapping(path = "/14/CRUD.ctrl", method = RequestMethod.GET) //DataTable 版
 	public String processAction23(Model m) {
 		
 			
@@ -76,7 +77,7 @@ public class CRUDControllerAP {
 	}
 	
 	
-	@RequestMapping(path = "/14/deleteProduct.ctrl", method = RequestMethod.GET)
+	@RequestMapping(path = "/14/deleteProduct.ctrl", method = RequestMethod.GET) //刪除商品
 	private String processDelete(Model m, @RequestParam(name = "pageNo" ,required = false) Integer pageNo, 
 			@RequestParam(name = "productId" ,required = false)String productid)
 			 {
@@ -105,7 +106,7 @@ public class CRUDControllerAP {
 
 	}
 	
-	@RequestMapping(path = "/14/updateProduct.ctrl", method = RequestMethod.GET)
+	@RequestMapping(path = "/14/updateProduct.ctrl", method = RequestMethod.GET) //[舊版] 修改商品
 	private String processUpdate(Model m, @RequestParam(name = "pageNo" ,required = false) Integer pageNo,
 			@RequestParam(name = "productid") String productid )
 			 {
@@ -119,7 +120,7 @@ public class CRUDControllerAP {
 
 	}
 	
-	@RequestMapping(path = "/14/updateDoneProduct.ctrl", method = RequestMethod.POST)
+	@RequestMapping(path = "/14/updateDoneProduct.ctrl", method = RequestMethod.POST) //修改商品
 	private String processUpdateDone(Model m, @RequestParam(name = "pageNo",required = false) Integer pageNo, 
 			@RequestParam(name = "APNUM") Integer apNum, @RequestParam(name = "APPRICE") String apPrice,
 			@RequestParam(name = "APTITLE") String apTitle, @RequestParam(name = "productid") String productid, @RequestParam(name = "APDES") String APDES,
@@ -149,7 +150,7 @@ public class CRUDControllerAP {
 	}
 	
 	//FORM:FORM 難用的東西
-	@RequestMapping(path = "/14/updateFormDone.ctrl", method = RequestMethod.POST)
+	@RequestMapping(path = "/14/updateFormDone.ctrl", method = RequestMethod.POST) //想不開
 	private String processUpdateFormDone(@ModelAttribute("ap") ARTProduct ap, BindingResult result, Model m) {
 		if(ap.getProductImgBlob() == null) {
 			ARTProduct originArtProduct = pDaoservice.select(ap.getProductId());
@@ -170,7 +171,7 @@ public class CRUDControllerAP {
 	
 	
 	
-	@RequestMapping(path = "/14/createProduct.ctrl", method = RequestMethod.POST)
+	@RequestMapping(path = "/14/createProduct.ctrl", method = RequestMethod.POST) // 新增商品
 	private String processCreate(Model m, @RequestParam(name = "pageNo" ,required = false) Integer pageNo,
 			@RequestParam(name = "APNUM") Integer apNum,@RequestParam(name = "APPRICE") String apPrice, 
 			@RequestParam(name = "APTITLE") String apTitle, @RequestParam(name = "APTYPE",required = false) String apType,
@@ -229,7 +230,7 @@ public class CRUDControllerAP {
 
 	}
 	
-	@RequestMapping(path="/14/showOneProductCMS.ctrl")
+	@RequestMapping(path="/14/showOneProductCMS.ctrl") //列出單項商品
 	private String processDetial(Model m, @RequestParam(name = "pageNo" ,required = false) Integer pageNo,
 			@RequestParam(name = "productid") String apNum) {
 		ARTProduct ap = pDaoservice.select(apNum);
@@ -244,5 +245,10 @@ public class CRUDControllerAP {
 	public String processAction2(Model m) {
 		return IdentityFilter.loginID+"14/14_Create";
 	}
+	
+	//刪除會員訂單之類的東西從以下開始
+	
+
+	
 	
 }

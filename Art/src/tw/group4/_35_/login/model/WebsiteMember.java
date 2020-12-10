@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.springframework.stereotype.Component;
 
@@ -26,6 +27,9 @@ public class WebsiteMember {
 	
 	@Column(name = "password")
 	private String password;
+	
+	@Column(name = "realName" )
+	private String realName;
 	
 	@Column(name = "address")
 	private String address;
@@ -51,15 +55,19 @@ public class WebsiteMember {
 	@Column(name = "purchaseLimit")
 	private Double purchaseLimit;
 	
+	@Transient
+	private String memberPicBase64Str;
+	
 	public WebsiteMember() {
 		
 	}
 
-	public WebsiteMember(String name, String password, String address, String email, String tel, String memberType,
+	public WebsiteMember(String name, String password, String realName, String address, String email, String tel, String memberType,
 			Blob memberPic, String preference, LocalDate registerTime, Double purchaseLimit) {
 		super();
 		this.name = name;
 		this.password = password;
+		this.realName = realName;
 		this.address = address;
 		this.email = email;
 		this.tel = tel;
@@ -70,7 +78,7 @@ public class WebsiteMember {
 		this.purchaseLimit = purchaseLimit;
 	}
 
-
+	
 
 	public Integer getId() {
 		return id;
@@ -94,6 +102,14 @@ public class WebsiteMember {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public String getRealName() {
+		return realName;
+	}
+
+	public void setRealName(String realName) {
+		this.realName = realName;
 	}
 
 	public String getAddress() {
@@ -158,6 +174,14 @@ public class WebsiteMember {
 
 	public void setPurchaseLimit(Double purchaseLimit) {
 		this.purchaseLimit = purchaseLimit;
+	}
+
+	public String getMemberPicBase64Str() {
+		return memberPicBase64Str;
+	}
+
+	public void setMemberPicBase64Str(String memberPicBase64Str) {
+		this.memberPicBase64Str = memberPicBase64Str;
 	}
 	
 	

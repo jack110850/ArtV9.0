@@ -46,8 +46,9 @@
     	var sa = document.getElementById('ShippingAddress').value;
     	var name = document.getElementById('name').value;
     	var ph = document.getElementById('phone').value;
-    	if  (sa === "" || name==="" || ph==="") {
-    		window.alert ('姓名、電話和地址欄位不能空白！');
+    	var mail = document.getElementById('email').value;
+    	if  (sa === "" || name==="" || ph==="" || mail==="") {
+    		window.alert ('姓名、電話、地址和 email 欄位不能空白！');
     		return ; 
     	}
     	if (confirm("確定送出此份訂單 ? ") ) {
@@ -66,22 +67,45 @@
 
 </head>
 <body>
+
+<!-- start banner Area -->
+	<section class="banner-area relative" id="home">
+		<div class="overlay overlay-bg"></div>
+		<div class="container">
+			<div class="row d-flex align-items-center justify-content-center">
+				<div class="about-content col-lg-12">
+					<h1 class="text-white">AAART Shop</h1>
+					<p class="text-white link-nav">
+						<a href="index.html">Home </a> <span class="lnr lnr-arrow-right"></span>
+						<a href="<c:url value='/14/shopListController.ctrl' />"> Shop</a>
+						<span class="lnr lnr-arrow-right"></span> <span>訂單資訊確認</span>
+					</p>
+				</div>
+			</div>
+		</div>
+	</section>
+<!-- End banner Area -->
+
 <div class="container-md">
 <h3 style="text-align: center;margin-top: 80px;">請確認訂單資訊</h3>
 <FORM >
     <table>
         <tr>
             <th><label>收件人姓名：</label>
-                <input type="text" name="ShippingName" id='name' value="">
+                <input type="text" name="ShippingName" id='name' value="${mb.realName}">
             </th>
             <th><label>聯絡電話：</label>
-                <input type="text" name="ShippingTel" id='phone' value="">
+                <input type="text" name="ShippingTel" id='phone' value="${mb.tel}">
             </th>
             <th>訂單日期：<fmt:formatDate  value="${today}" pattern="yyyy-MM-dd"/></th>
             
         </tr>
         <tr>
-            <td colspan='3' >收件地址：<input id='ShippingAddress' name="Address" type="text" value="" style="width: 500px;" ></td>
+            <td colspan='3' >E-mail：<input id='email' name="email" type="text" value="${mb.email}" style="width: 500px;" ></td>
+            
+        </tr>
+        <tr>
+            <td colspan='3' >收件地址：<input id='ShippingAddress' name="Address" type="text" value="${mb.address}" style="width: 500px;" ></td>
             
         </tr>
         <tr>

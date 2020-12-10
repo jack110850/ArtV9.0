@@ -2,6 +2,8 @@ package tw.group4._11_.model;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+@Service
 public class StreetArtistBeanService {
 
 	private StreetArtistBeanDAO sDao;
@@ -28,5 +30,17 @@ public class StreetArtistBeanService {
 	
 	public boolean delete(int Id_SA) {
 		return sDao.delete(Id_SA);
+	}
+	
+	public List<StreetArtistBean> searchID(int id){
+		return sDao.searchID(id);
+	}
+	
+	public List<StreetArtistBean> search(String word){
+		return sDao.search(word);
+	}
+	
+	public int showSal(int id) {
+		return sDao.showSal(id);
 	}
 }
